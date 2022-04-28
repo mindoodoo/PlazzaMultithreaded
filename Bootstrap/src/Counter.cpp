@@ -32,6 +32,8 @@ bool Counter::trylock()
 
 void Counter::incrementCounter()
 {
+    ScopedLock sl = ScopedLock(this->mutexLock);
+
     this->counter++;
 }
 

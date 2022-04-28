@@ -5,14 +5,13 @@
 ** .
 */
 
-#include "include/include.h"
+#include "include.h"
 
 void *incrementCounter(void *num)
 {
-    ((Counter *)num)->lock();
     for (int i = 0; i < 5; i++)
         ((Counter *)num)->incrementCounter();
-    ((Counter *)num)->unlock();
+    return nullptr;
 }
 
 int main(int ac, char **av)

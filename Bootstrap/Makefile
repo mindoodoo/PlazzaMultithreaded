@@ -8,7 +8,8 @@
 CXXFLAGS = -g3 -pthread -I./include
 
 SRC = main.cpp \
-	src/Counter.cpp
+	src/Counter.cpp \
+	src/ScopedLock.cpp
 
 all: bootstrap clean
 
