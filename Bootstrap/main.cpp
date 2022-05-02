@@ -23,13 +23,13 @@ int main(int ac, char **av)
 
     int t = atoi(av[1]);
     Counter number = Counter(0);
-    auto *threads = (pthread_t *)calloc(t, sizeof(pthread_t));
+    ThreadEncaps **threads = (ThreadEncaps **)calloc(t, sizeof(ThreadEncaps *));
 
     for (int i = 0; i < t; i++) {
-        pthread_create(&threads[i], NULL, &incrementCounter, &number);
+        threads[i] = new ThreadEncaps(incrementCounter, &number);
     }
     for (int i = 0; i < t; i++) {
-        pthread_join(threads[i], NULL);
+        threads[i]->join(nullptr);
     }
 
     std::cout << "Expected : " << t*5 << std::endl;

@@ -12,3 +12,4 @@
 #include "IMutex.hpp"
 #include "ScopedLock.hpp"
 #include "Counter.hpp"
+#include "ThreadEncaps.hpp"
