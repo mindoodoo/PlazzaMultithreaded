@@ -10,9 +10,10 @@
 #include <cstdlib>
 #include <mutex>
 #include <deque>
+#include <thread>
 
 #include "IMutex.hpp"
 #include "ScopedLock.hpp"
 #include "Counter.hpp"
 #include "ThreadEncaps.hpp"
-#include "ISafeQueue.hpp"
+#include "SafeQueue.hpp"

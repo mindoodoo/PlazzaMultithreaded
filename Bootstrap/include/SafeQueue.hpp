@@ -8,8 +8,9 @@
 #pragma once
 
 #include "include.h"
+#include "ISafeQueue.hpp"
 
-class SafeQueue: public ISafeQueue{
+class SafeQueue: public ISafeQueue {
 public:
     SafeQueue() = default;
 
