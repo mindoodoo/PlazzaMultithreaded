@@ -7,9 +7,12 @@
 
 #include <iostream>
 #include <pthread.h>
-#include <stdlib.h>
+#include <cstdlib>
+#include <mutex>
+#include <deque>
 
 #include "IMutex.hpp"
 #include "ScopedLock.hpp"
 #include "Counter.hpp"
 #include "ThreadEncaps.hpp"
+#include "ISafeQueue.hpp"
