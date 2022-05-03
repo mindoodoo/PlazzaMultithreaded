@@ -43,8 +43,10 @@ void *producer(void *arg)
 {
     auto queue = (SafeQueue*)arg;
 
-    while (true)
+    while (true) {
         queue->push(rand() % 100);
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    }
 }
 
 void *consumer(void *arg)
