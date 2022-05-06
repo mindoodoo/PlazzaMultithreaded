@@ -7,7 +7,7 @@
 
 #include "Pizza.hpp"
 
-Pizza::Pizza(enum PizzaType pizzaType): _pizzaType(pizzaType)
+Pizza::Pizza(enum PizzaType type, enum PizzaSize size): _type(type), _size(size)
 {
 }
 
@@ -15,8 +15,12 @@ Pizza::~Pizza()
 {
 }
 
-enum PizzaType Pizza::getPizzaType() const {
-    return _pizzaType;
+enum PizzaType Pizza::getType() const {
+    return _type;
+}
+
+enum PizzaSize Pizza::getSize() const {
+    return _size;
 }
 
 enum State Pizza::getState() const {
