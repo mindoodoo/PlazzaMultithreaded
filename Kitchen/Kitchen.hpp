@@ -1,20 +1,37 @@
 /*
-** EPITECH PROJECT, 2021
-** Main
+** EPITECH PROJECT, 2022
+** theplazza
 ** File description:
-** Main
+** Kitchen
 */
 
-#pragma once
+#ifndef KITCHEN_HPP_
+    #define KITCHEN_HPP_
 
-#include "ProcessEncapsulation.hpp"
+    #include <vector>
+    #include "ProcessEncapsulation.hpp"
 
-class Kitchen: public ProcessEncapsulation {
-public:
-    Kitchen(int nbCooks, std::string &ipcPath);
+    enum INGREDIENTS {
+        DOE,
+        TOMATO,
+        GRUYERE,
+        HAM,
+        MUSHROOMS,
+        STEAK,
+        EGGPLANT,
+        GOAT_CHEESE,
+        CHIEF_LOVE
+    };
 
-    int processMain() override;
+    class Kitchen : public ProcessEncapsulation {
+        public:
+            Kitchen(int nbCooks, std::string &ipcPath);
+            int processMain() override;
 
-private:
-    int _nbCooks;
-};
+    private:
+        int _nbCooks;
+        std::vector<size_t> _ingredients;
+    };
+
+
+#endif /* !KITCHEN_HPP_ */

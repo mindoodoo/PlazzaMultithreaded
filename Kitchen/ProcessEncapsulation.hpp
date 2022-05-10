@@ -1,11 +1,12 @@
 /*
-** EPITECH PROJECT, 2021
-** Main
+** EPITECH PROJECT, 2022
+** theplazza
 ** File description:
-** Main
+** ProcessEncapsulation
 */
 
-#pragma once
+#ifndef PROCESSENCAPSULATION_HPP_
+#define PROCESSENCAPSULATION_HPP_
 
 #include <unistd.h>
 #include <sys/types.h>
@@ -18,19 +19,18 @@
 #include <string.h>
 
 class ProcessEncapsulation {
-public:
-    ProcessEncapsulation(std::string &ipcPath);
-    ~ProcessEncapsulation() = default;
+    public:
+        ProcessEncapsulation(std::string &ipcPath);
+        ~ProcessEncapsulation() = default;
+        pid_t startProcess();
+        std::string receiveMessage() const;
+        void sendMessage(std::string msg) const;
+        virtual int processMain() = 0;
+        pid_t getPid() const;
 
-    pid_t startProcess();
-    std::string receiveMessage() const;
-    void sendMessage(std::string msg) const;
-
-    virtual int processMain() = 0;
-
-    pid_t getPid() const;
-
-protected:
-    pid_t _pid;
-    std::string _ipcPath;
+    protected:
+        pid_t _pid;
+        std::string _ipcPath;
 };
+
+#endif /* !PROCESSENCAPSULATION_HPP_ */
