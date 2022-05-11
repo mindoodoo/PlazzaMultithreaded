@@ -8,18 +8,8 @@
 #ifndef PIZZA_HPP_
     #define PIZZA_HPP_
 
-<<<<<<< HEAD
-enum PizzaType
-{
-    megina = 1,
-    margarita = 2,
-    americana = 4,
-    fantasia = 8
-};
-=======
     #include <string>
     #include <sstream>
->>>>>>> 9f84a6bd736cb264b926577b2a31183fed0aa1e9
 
     enum PizzaType
     {
