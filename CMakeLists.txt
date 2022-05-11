@@ -11,4 +11,4 @@ add_executable(Plazza
         Pizza/Pizza.hpp
         Reception/reception.cpp
         Reception/reception.hpp
-        plazza.cpp Kitchen/Kitchen.cpp Kitchen/Kitchen.hpp Kitchen/ProcessEncapsulation.cpp Kitchen/ProcessEncapsulation.hpp)
+        plazza.cpp Kitchen/Kitchen.cpp Kitchen/Kitchen.hpp Kitchen/ProcessEncapsulation.cpp Kitchen/ProcessEncapsulation.hpp Kitchen/Timer.cpp Kitchen/Timer.hpp)

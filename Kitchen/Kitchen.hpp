@@ -10,8 +10,10 @@
 #include <vector>
 #include <chrono>
 #include <thread>
+#include <sstream>
 #include "ProcessEncapsulation.hpp"
 #include "Pizza.hpp"
+#include "Timer.hpp"
 
 typedef struct {
     int totalCapacity;
@@ -35,9 +37,11 @@ class Kitchen : public ProcessEncapsulation {
     public:
         Kitchen(int nbCooks, std::string &ipcPath);
 
+        // Main kitchen functions
         int processMain() override;
+        void handleMessages(std::string msg);
 
-        // Ipc functions
+        // IPC functions
         capacity_t requestCapacity() const;
 
 private:
