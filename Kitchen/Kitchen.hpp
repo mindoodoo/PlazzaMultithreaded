@@ -5,33 +5,45 @@
 ** Kitchen
 */
 
-#ifndef KITCHEN_HPP_
-    #define KITCHEN_HPP_
+#pragma once
 
-    #include <vector>
-    #include "ProcessEncapsulation.hpp"
+#include <vector>
+#include <chrono>
+#include <thread>
+#include "ProcessEncapsulation.hpp"
+#include "Pizza.hpp"
 
-    enum INGREDIENTS {
-        DOE,
-        TOMATO,
-        GRUYERE,
-        HAM,
-        MUSHROOMS,
-        STEAK,
-        EGGPLANT,
-        GOAT_CHEESE,
-        CHIEF_LOVE
-    };
+typedef struct {
+    int totalCapacity;
+    int free;
+    float percentageFree;
+} capacity_t;
 
-    class Kitchen : public ProcessEncapsulation {
-        public:
-            Kitchen(int nbCooks, std::string &ipcPath);
-            int processMain() override;
+enum INGREDIENTS {
+    DOE,
+    TOMATO,
+    GRUYERE,
+    HAM,
+    MUSHROOMS,
+    STEAK,
+    EGGPLANT,
+    GOAT_CHEESE,
+    CHIEF_LOVE
+};
 
-    private:
-        int _nbCooks;
-        std::vector<size_t> _ingredients;
-    };
+class Kitchen : public ProcessEncapsulation {
+    public:
+        Kitchen(int nbCooks, std::string &ipcPath);
 
+        int processMain() override;
 
-#endif /* !KITCHEN_HPP_ */
+        // Ipc functions
+        capacity_t requestCapacity() const;
+
+private:
+    int _nbCooks;
+    int _pizzasCooking;
+
+    std::vector<Pizza> _pizzaQueue;
+    std::vector<size_t> _ingredients;
+};
