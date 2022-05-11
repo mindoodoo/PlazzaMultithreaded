@@ -8,6 +8,9 @@
 #ifndef PIZZA_HPP_
     #define PIZZA_HPP_
 
+    #include <string>
+    #include <sstream>
+
     enum PizzaType
     {
         Regina = 1,
@@ -25,26 +28,19 @@
         XXL = 16
     };
 
-    enum State
-    {
-        IN_QUEUE,
-        COOKING,
-        DONE
-    };
-
     class Pizza {
         public:
             Pizza(enum PizzaType pizzaType, enum PizzaSize size);
-            ~Pizza();
+            Pizza(std::string serialization);
+
+        ~Pizza();
             enum PizzaType getType() const;
             enum PizzaSize getSize() const;
-            enum State getState() const;
-            void setState(enum State);
+            std::string serialize() const;
 
         private:
-            const enum PizzaType _type;
+            enum PizzaType _type;
             enum PizzaSize _size;
-            enum State _state;
     };
 
 #endif /* !PIZZA_HPP_ */

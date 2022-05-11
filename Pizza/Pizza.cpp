@@ -23,10 +23,20 @@ enum PizzaSize Pizza::getSize() const {
     return _size;
 }
 
-enum State Pizza::getState() const {
-    return _state;
+std::string Pizza::serialize() const {
+    std::stringstream ss;
+
+    ss << this->_type << ";";
+    ss << this->_size;
+    return ss.str();
 }
 
-void Pizza::setState(enum State state) {
-    _state = state;
+Pizza::Pizza(std::string serialization) {
+    int sepIndex;
+
+    sepIndex = serialization.find(";");
+    if (sepIndex == std::string::npos)
+        exit(84); // Not supposed to happen
+    this->_type = PizzaType(std::stoi(serialization.substr(0, sepIndex)));
+    this->_size = PizzaSize(std::stoi(serialization.substr(sepIndex + 1, std::string::npos)));
 }
