@@ -5,3 +5,5 @@ Bootstrap/bootstrap
 **/.idea
 sandbox.cpp
 a.out
+CMakeLists.txt
+.vscode
