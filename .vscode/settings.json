@@ -1,5 +1,6 @@
 {
     "files.associations": {
+<<<<<<< HEAD
         "ostream": "cpp",
         "array": "cpp",
         "atomic": "cpp",
@@ -57,3 +58,8 @@
         "sstream": "cpp"
     }
 }
+=======
+        "string": "cpp"
+    }
+}
+>>>>>>> 9f84a6bd736cb264b926577b2a31183fed0aa1e9
