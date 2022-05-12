@@ -10,13 +10,15 @@
 
     #include <string>
     #include <sstream>
+    #include <iostream>
+
 
     enum PizzaType
     {
-        Regina = 1,
-        Margarita = 2,
-        Americana = 4,
-        Fantasia = 8
+        megina = 1,
+        margarita = 2,
+        americana = 4,
+        fantasia = 8
     };
 
     enum PizzaSize

@@ -5,7 +5,7 @@
 ** Main
 */
 
-#include "reception.hpp"
+#include "Reception.hpp"
 
 Reception::Reception() {}
 
@@ -72,7 +72,7 @@ PizzaSize convertSize(const std::string& str)
         return PizzaSize::XL;
     else if(str == "XXL")
         return PizzaSize::XXL;
-    std::cout << "WARNING, YOU CAN ACCESS HER, PLEASE CHECK CONVERTSIZE FUNCTION" << std::endl;
+    std::cout << "WARNING, YOU MUST NOT BE HERE, PLEASE CHECK CONVERTSIZE FUNCTION FOR SOLVE THIS PROBLEM !" << std::endl;
     return PizzaSize::XXL;
 }
 
@@ -86,12 +86,13 @@ PizzaType convertType(const std::string& str)
         return PizzaType::americana;
     else if(str == "fantasia")
         return PizzaType::fantasia;
-    std::cout << "WARNING, YOU CAN ACCESS HER, PLEASE CHECK CONVERTTYPE FUNCTION" << std::endl;
+    std::cout << "WARNING, YOU MUST NOT BE HERE, PLEASE CHECK CONVERTTYPE FUNCTION FOR SOLVE THIS PROBLEM !" << std::endl;
     return PizzaType::fantasia;
 }
 
 int checkArgNbr(std::vector<std::string> &sortinput) {
     int arg = 0;
+    std::cout << "Size sort input" << sortinput.size() << std::endl;
     std::cout << sortinput[0] << "test" << std::endl;
     for (size_t i = 0; i < sortinput.size(); i++) {
         if (sortinput[i][0] == ';' ) {
@@ -175,6 +176,7 @@ void Reception::parsing() {
             exit(0);
         if (input == "Menu") {
             displayMenu();
+            AddLog("Menu printed by the user");
         } else {
             SortString(input, sortinput);
             if (checkArgNbr(sortinput) == 84)

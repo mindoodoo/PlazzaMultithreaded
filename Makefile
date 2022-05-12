@@ -5,8 +5,9 @@
 ## Makefile
 ##
 
-SRC	=	Reception/reception.cpp				\
-		Pizza/Pizza.cpp
+SRC	=	Reception/Reception.cpp				\
+		Pizza/Pizza.cpp						\
+		LogEngine/Log.cpp
 
 NAME	=	plazza
 

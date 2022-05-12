@@ -1,0 +1,8 @@
+12-05-2022 10:19:59	Menu printed by the user
+12-05-2022 10:35:07	Menu printed by the user
+12-05-2022 11:06:46	Menu printed by the user
+12-05-2022 11:06:54	Menu printed by the user
+12-05-2022 11:07:00	Menu printed by the user
+12-05-2022 11:08:43	Menu printed by the user
+12-05-2022 11:08:49	Menu printed by the user
+12-05-2022 11:09:07	Menu printed by the user

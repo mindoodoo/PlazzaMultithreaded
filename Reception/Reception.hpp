@@ -13,6 +13,7 @@
 #include <fstream>
 #include <sstream>
 #include "../Pizza/Pizza.hpp"
+#include "../LogEngine/Log.hpp"
 #include <string>
 
 class Reception {
