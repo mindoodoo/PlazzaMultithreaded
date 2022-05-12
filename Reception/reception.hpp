@@ -15,7 +15,6 @@ class Reception {
         Reception();
         ~Reception();
     private:
-        vector
 }
 
 #endif /* !RECEPTION_HPP_ */

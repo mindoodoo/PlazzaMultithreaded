@@ -33,7 +33,7 @@
             Pizza(enum PizzaType pizzaType, enum PizzaSize size);
             Pizza(std::string serialization);
 
-        ~Pizza();
+            ~Pizza();
             enum PizzaType getType() const;
             enum PizzaSize getSize() const;
             std::string serialize() const;
