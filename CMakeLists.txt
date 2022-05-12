@@ -8,7 +8,10 @@ include_directories(Reception)
 
 add_executable(Plazza
         Pizza/Pizza.cpp
-        Pizza/Pizza.hpp
-        Reception/reception.cpp
-        Reception/reception.hpp
-        plazza.cpp Kitchen/Kitchen.cpp Kitchen/Kitchen.hpp Kitchen/ProcessEncapsulation.cpp Kitchen/ProcessEncapsulation.hpp Kitchen/Timer.cpp Kitchen/Timer.hpp)
+        Reception/Reception.cpp
+        Kitchen/Kitchen.cpp
+        Kitchen/ProcessEncapsulation.cpp
+        Kitchen/Timer.cpp
+        LogEngine/Log.cpp
+        plazza.cpp
+        Kitchen/SplitString.cpp Kitchen/SplitString.hpp)
