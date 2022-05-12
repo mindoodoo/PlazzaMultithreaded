@@ -10,7 +10,7 @@
 pid_t ProcessEncapsulation::startProcess() {
     this->_pid = fork();
 
-    if (!this->_pid)
+    if (!this->_pid) // If child
         this->processMain();
     return this->_pid;
 }

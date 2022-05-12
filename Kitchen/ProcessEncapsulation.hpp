@@ -22,10 +22,15 @@ class ProcessEncapsulation {
     public:
         ProcessEncapsulation(std::string &ipcPath);
         ~ProcessEncapsulation() = default;
+
         pid_t startProcess();
+        virtual int processMain() = 0;
+
+        // IPC
         std::string receiveMessage() const;
         void sendMessage(std::string msg) const;
-        virtual int processMain() = 0;
+
+        // Getters
         pid_t getPid() const;
 
     protected:

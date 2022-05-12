@@ -9,8 +9,8 @@
 #include "Kitchen.hpp"
 
 
-Kitchen::Kitchen(int nbCooks, std::string &ipcPath) :
-    ProcessEncapsulation(ipcPath), _nbCooks(nbCooks) {
+Kitchen::Kitchen(int nbCooks, std::string &ipcPath, int id) :
+    ProcessEncapsulation(ipcPath), _nbCooks(nbCooks), _id(id) {
         _ingredients = std::vector<size_t>(9, 5);
     }
 
@@ -20,15 +20,17 @@ int Kitchen::processMain()
     std::string newMessage;
 
     // Main kitchen loop
+    std::cout << "Kithcen process started" << std::endl;
     while (!timeoutTimer.isExpired()) {
         // Handle communications
         newMessage = this->receiveMessage();
         this->handleMessages(newMessage);
-
     }
     return 0;
 }
 
+// Handles new incoming IPC messages for child process (actual kitchen)
+// Used in main loop in processMain()
 void Kitchen::handleMessages(std::string msg) {
     if (msg == "capa") {
         std::stringstream ss;
@@ -65,4 +67,8 @@ capacity_t Kitchen::requestCapacity() const {
     output.percentageFree = output.free * 100 / output.totalCapacity;
 
     return output;
+}
+
+int Kitchen::getId() const {
+    return _id;
 }
