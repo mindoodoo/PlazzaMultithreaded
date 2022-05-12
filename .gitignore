@@ -9,3 +9,5 @@ CMakeLists.txt
 .vscode
 plazza
 .~lock.Menu.csv#
+**/vgcore*
+Kitchen/testmain.cpp
