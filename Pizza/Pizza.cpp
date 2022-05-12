@@ -7,7 +7,7 @@
 
 #include "Pizza.hpp"
 
-Pizza::Pizza(enum PizzaType type, enum PizzaSize size): _type(type), _size(size)
+Pizza::Pizza(enum PizzaType type, enum PizzaSize size): _type(type), _size(size) 
 {
 }
 

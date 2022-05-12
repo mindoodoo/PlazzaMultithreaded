@@ -16,10 +16,35 @@ Kitchen::Kitchen(int nbCooks, std::string &ipcPath) :
 
 int Kitchen::processMain()
 {
-    std::cout << this->receiveMessage();
+    Timer timeoutTimer(5);
+    std::string newMessage;
+
+    // Main kitchen loop
+    while (!timeoutTimer.isExpired()) {
+        // Handle communications
+        newMessage = this->receiveMessage();
+        this->handleMessages(newMessage);
+
+    }
     return 0;
 }
 
+void Kitchen::handleMessages(std::string msg) {
+    if (msg == "capa") {
+        std::stringstream ss;
+        int totalCapa = 2 * this->_nbCooks;
+
+        ss << totalCapa - this->_pizzasCooking - this->_pizzaQueue.size();
+        ss << ";";
+        ss << totalCapa;
+
+        this->sendMessage(ss.str());
+    }
+}
+
+// Function used by parent process (reception) in order to request current
+// capacity of kitchen through named pipe IPC
+// See capacity_t for return
 capacity_t Kitchen::requestCapacity() const {
     capacity_t output;
     std::string msg;

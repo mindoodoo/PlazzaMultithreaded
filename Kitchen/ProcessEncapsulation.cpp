@@ -12,7 +12,6 @@ pid_t ProcessEncapsulation::startProcess() {
 
     if (!this->_pid)
         this->processMain();
-    std::cout << "Pid being returned " << this->_pid << std::endl;
     return this->_pid;
 }
 
