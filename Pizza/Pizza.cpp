@@ -28,17 +28,24 @@ enum PizzaSize Pizza::getSize() const {
 std::string Pizza::serialize() const {
     std::stringstream ss;
 
-    ss << this->_type << ";";
+    ss << this->_type << "-";
     ss << this->_size;
     return ss.str();
 }
 
 Pizza::Pizza(std::string serialization) {
-    int sepIndex;
+    SplitString parsedStr(serialization, "-");
 
-    sepIndex = serialization.find(";");
-    // if (sepIndex == std::string::npos)
-        // exit(84); // Not supposed to happen
-    this->_type = PizzaType(std::stoi(serialization.substr(0, sepIndex)));
-    this->_size = PizzaSize(std::stoi(serialization.substr(sepIndex + 1, std::string::npos)));
+    // This check should eventually be replaced by custom exception
+    if (parsedStr._tokens.size() != 2)
+        throw std::invalid_argument("Pizza serialization failed...");
+
+    this->_type = PizzaType(std::stoi(parsedStr._tokens[0]));
+    this->_size = PizzaSize(std::stoi(parsedStr._tokens[1]));
+}
+
+std::ostream &operator<<(std::ostream &os, const Pizza &pizza) {
+    os << pizza.serialize();
+
+    return os;
 }

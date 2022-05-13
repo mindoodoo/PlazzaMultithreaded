@@ -14,4 +14,4 @@ add_executable(Plazza
         Kitchen/Timer.cpp
         LogEngine/Log.cpp
         plazza.cpp
-        Kitchen/SplitString.cpp Kitchen/SplitString.hpp)
+        Kitchen/SplitString.cpp Kitchen/SplitString.hpp Kitchen/ThreadEncapsulation.cpp Kitchen/ThreadEncapsulation.hpp)

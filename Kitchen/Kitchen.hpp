@@ -11,9 +11,11 @@
 #include <chrono>
 #include <thread>
 #include <sstream>
+#include <ostream>
 #include "ProcessEncapsulation.hpp"
 #include "Pizza.hpp"
 #include "Timer.hpp"
+#include "SplitString.hpp"
 
 typedef struct {
     int totalCapacity;
@@ -43,8 +45,13 @@ class Kitchen : public ProcessEncapsulation {
 
         // IPC functions
         capacity_t requestCapacity() const;
+        bool requestOrder(std::vector<Pizza> orders);
+        void respondCapacity() const;
+        void respondPizzaOrder(std::string msg);
 
         int getId() const;
+
+
 
 private:
     int _nbCooks;

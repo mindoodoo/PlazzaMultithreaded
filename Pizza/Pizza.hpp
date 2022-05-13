@@ -11,6 +11,8 @@
     #include <string>
     #include <sstream>
     #include <iostream>
+    #include <stdexcept>
+    #include "../Kitchen/SplitString.hpp"
 
 
     enum PizzaType
@@ -40,9 +42,11 @@
             enum PizzaSize getSize() const;
             std::string serialize() const;
 
-        private:
+    private:
             enum PizzaType _type;
             enum PizzaSize _size;
     };
+
+    std::ostream &operator<<(std::ostream &os, const Pizza &pizza);
 
 #endif /* !PIZZA_HPP_ */
