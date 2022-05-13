@@ -10,9 +10,10 @@
 
 
 Kitchen::Kitchen(int nbCooks, std::string &ipcPath, int id) :
-    ProcessEncapsulation(ipcPath), _nbCooks(nbCooks), _id(id) {
-        _ingredients = std::vector<size_t>(9, 5);
-    }
+ProcessEncapsulation(ipcPath), _nbCooks(nbCooks), _id(id),  _ipcPath(ipcPath) {
+    _ingredients = std::vector<size_t>(9, 5);
+    this->_pizzasCooking = 0;
+}
 
 int Kitchen::processMain()
 {
@@ -20,7 +21,6 @@ int Kitchen::processMain()
     std::string newMessage;
 
     // Main kitchen loop
-    std::cout << "Kithcen process started" << std::endl;
     while (!timeoutTimer.isExpired()) {
         // Handle communications
         newMessage = this->receiveMessage();
@@ -39,7 +39,7 @@ void Kitchen::handleMessages(std::string msg) {
         return;
     if (splitMsg._tokens[0] == "capa")
         this->respondCapacity();
-    if (splitMsg._tokens[1] == "pizza")
+    if (splitMsg._tokens[0] == "order")
         this->respondPizzaOrder(splitMsg._tokens[1]);
 }
 
@@ -72,7 +72,9 @@ void Kitchen::respondPizzaOrder(std::string msg) {
     }
 
     // Check if kitchen has capacity for new order
-    if (pizzas.size() + this->_pizzasCooking + this->_pizzaQueue.size() >= 1 * this->_nbCooks) {
+    if (pizzas.size() + this->_pizzasCooking + this->_pizzaQueue.size() > 2 * this->_nbCooks) {
+        std::cout << "In this if : " << pizzas.size() + this->_pizzasCooking << std::endl;
+        std::cout << "Capacity : " << 2 * this->_nbCooks << std::endl;
         this->sendMessage("failure");
         return;
     }
@@ -90,7 +92,6 @@ capacity_t Kitchen::requestCapacity() const {
     std::string msg;
 
     this->sendMessage("capa");
-    std::this_thread::sleep_for(std::chrono::milliseconds(500)); // This sleep is temporary and only a way of avoiding to re read the message emitted
     msg = this->receiveMessage();
 
     SplitString msgSplit(msg, ";");
@@ -109,7 +110,7 @@ capacity_t Kitchen::requestCapacity() const {
 // Used by parent process in order to request pizza order
 // Takes vector of pizza as argument
 // returns true if error and order not passed, false if success
-bool Kitchen::requestOrder(std::vector<Pizza> orders) {
+bool Kitchen::requestOrder(std::vector<Pizza> &orders) {
     std::stringstream ss;
 
     // Assemble order serialization
@@ -117,7 +118,6 @@ bool Kitchen::requestOrder(std::vector<Pizza> orders) {
     for (auto order = orders.begin(); order != orders.end(); ++order)
         ss << *order << ";";
     this->sendMessage(ss.str());
-    std::this_thread::sleep_for(std::chrono::milliseconds(500)); // This will eventuallt be removed too
 
     std::string response = this->receiveMessage();
     if (response == "success")
@@ -127,4 +127,9 @@ bool Kitchen::requestOrder(std::vector<Pizza> orders) {
 
 int Kitchen::getId() const {
     return _id;
+}
+
+Kitchen::~Kitchen() {
+    if (this->_pid)
+        std::remove(this->_ipcPath.c_str());
 }

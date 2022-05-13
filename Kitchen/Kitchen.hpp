@@ -13,7 +13,7 @@
 #include <sstream>
 #include <ostream>
 #include "ProcessEncapsulation.hpp"
-#include "Pizza.hpp"
+#include "../Pizza/Pizza.hpp"
 #include "Timer.hpp"
 #include "SplitString.hpp"
 
@@ -38,14 +38,15 @@ enum INGREDIENTS {
 class Kitchen : public ProcessEncapsulation {
     public:
         Kitchen(int nbCooks, std::string &ipcPath, int id);
+        ~Kitchen();
 
-        // Main kitchen functions
+    // Main kitchen functions
         int processMain() override;
         void handleMessages(std::string msg);
 
         // IPC functions
         capacity_t requestCapacity() const;
-        bool requestOrder(std::vector<Pizza> orders);
+        bool requestOrder(std::vector<Pizza> &orders);
         void respondCapacity() const;
         void respondPizzaOrder(std::string msg);
 
@@ -57,6 +58,7 @@ private:
     int _nbCooks;
     int _pizzasCooking;
     const int _id;
+    const std::string _ipcPath;
 
     std::vector<Pizza> _pizzaQueue;
     std::vector<size_t> _ingredients;

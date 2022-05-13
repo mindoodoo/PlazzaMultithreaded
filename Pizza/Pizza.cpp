@@ -9,8 +9,6 @@
 
 Pizza::Pizza(enum PizzaType type, enum PizzaSize size): _type(type), _size(size) 
 {
-    std::cout << "Pizza type: " << _type << std::endl;
-    std::cout << "Pizza size: " << _size << std::endl;
 }
 
 Pizza::~Pizza()

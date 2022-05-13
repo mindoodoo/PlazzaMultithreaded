@@ -30,6 +30,7 @@ std::string ProcessEncapsulation::receiveMessage() const
     std::ifstream ipcStream(this->_ipcPath);
     std::stringstream ss;
 
+
     ss << ipcStream.rdbuf();
     return ss.str();
 }

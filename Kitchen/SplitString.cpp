@@ -14,7 +14,8 @@ SplitString::SplitString(std::string originalStr, std::string sep)
         this->_tokens.push_back(originalStr.substr(0, pos));
         originalStr.erase(0, pos + sep.length());
     }
-    this->_tokens.push_back(originalStr);
+    if (originalStr != "")
+        this->_tokens.push_back(originalStr);
 }
 
 const std::string &SplitString::getOriginalStr() const {
