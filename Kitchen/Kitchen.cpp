@@ -9,7 +9,7 @@
 #include "Kitchen.hpp"
 
 
-Kitchen::Kitchen(int nbCooks, std::string &ipcPath, int id) :
+Kitchen::Kitchen(int nbCooks, std::string ipcPath, int id) :
 ProcessEncapsulation(ipcPath), _nbCooks(nbCooks), _id(id),  _ipcPath(ipcPath) {
     _ingredients = std::vector<size_t>(9, 5);
     this->_pizzasCooking = 0;
@@ -61,6 +61,7 @@ void Kitchen::respondPizzaOrder(std::string msg) {
     SplitString orders(msg, ";");
     std::vector<Pizza> pizzas;
 
+    std::cout << "Received new pizza order request..." << std::endl;   
     AddLog("Received new pizza order request...");
     // Attempt to deserializa every pizza
     for (auto order = orders._tokens.begin(); order != orders._tokens.end(); ++order) {
@@ -84,6 +85,7 @@ void Kitchen::respondPizzaOrder(std::string msg) {
     this->_pizzaQueue.insert(this->_pizzaQueue.end(), pizzas.begin(), pizzas.end());
     this->sendMessage("success");
     AddLog("Succesfully added pizzas to cook!");
+    std::cout << "Succesfully added pizzas to cook!" << std::endl;
 }
 
 // Function used by parent process (reception) in order to request current

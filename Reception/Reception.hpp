@@ -14,6 +14,7 @@
 #include <sstream>
 #include "../Pizza/Pizza.hpp"
 #include "../LogEngine/Log.hpp"
+#include "../Kitchen/Kitchen.hpp"
 #include <string>
 
 class Reception {
@@ -28,6 +29,7 @@ class Reception {
         PizzaType convertTypeEnum(const std::string& str);
         int checkErrorInput(std::vector<std::string> &sortinput);
         void StockInputInVec(std::string input, std::vector<std::string> &sortinput);
+        void splitOrderInKitchen();
     private:
         std::vector<Pizza> _orders;
         std::vector<std::vector<std::string>> _CSVcontents;

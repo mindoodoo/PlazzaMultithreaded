@@ -90,8 +90,6 @@ PizzaType Reception::convertTypeEnum(const std::string& str) {
 
 int Reception::checkErrorInput(std::vector<std::string> &sortinput) {
     int arg = 0;
-    std::cout << "Size sort input" << sortinput.size() << std::endl;
-    std::cout << sortinput[0] << "test" << std::endl;
     for (size_t i = 0; i < sortinput.size(); i++) {
         if (sortinput[i][0] == ';' ) {
 
@@ -179,14 +177,31 @@ void Reception::parsing() {
             StockInputInVec(input, sortinput);
             if (checkErrorInput(sortinput) == 84)
                 std::cout << "\033[1;31mBad order, your order must have this format:\n\tpizzaName SIZE xQUANT; [...]; pizzaName SIZE xQUANT\033[0m" << std::endl;
-            else
+            else {
                 stockPizzaInVec(sortinput);
+                splitOrderInKitchen();
+            }
         }
     }
 }
 
-int main (void) {
-    Reception a;
-    a.parsing();
-    return 0;
+void Reception::splitOrderInKitchen() {
+    std::vector<Kitchen> kitchen;
+    std::vector<std::vector<Pizza>> pizza;
+    size_t argv = 3 * 2;
+    int a = 0;
+
+    pizza.push_back(std::vector<Pizza>());
+    for (size_t i = 0; i < _orders.size(); i++) {
+        if (pizza[a].size() == argv) {
+            a++;
+            pizza.push_back(std::vector<Pizza>());
+        }
+        pizza[a].push_back(_orders[i]);
+    }
+    for (size_t i = 0; i < pizza.size(); i++) {
+        // std::cout << std::string("ipc/ipc") + std::to_string(i) << std::endl;
+        kitchen.push_back(Kitchen(argv / 2, std::string("ipc/ipc") + std::to_string(i), i));
+        kitchen[i].requestOrder(pizza[i]);
+    }
 }
