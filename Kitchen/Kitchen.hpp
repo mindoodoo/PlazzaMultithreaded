@@ -16,6 +16,7 @@
 #include "../Pizza/Pizza.hpp"
 #include "Timer.hpp"
 #include "SplitString.hpp"
+#include "../LogEngine/Log.hpp"
 
 typedef struct {
     int totalCapacity;

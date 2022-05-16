@@ -61,6 +61,7 @@ void Kitchen::respondPizzaOrder(std::string msg) {
     SplitString orders(msg, ";");
     std::vector<Pizza> pizzas;
 
+    AddLog("Received new pizza order request...");
     // Attempt to deserializa every pizza
     for (auto order = orders._tokens.begin(); order != orders._tokens.end(); ++order) {
         try {
@@ -82,6 +83,7 @@ void Kitchen::respondPizzaOrder(std::string msg) {
     // Add pizzas to queue and send success msg
     this->_pizzaQueue.insert(this->_pizzaQueue.end(), pizzas.begin(), pizzas.end());
     this->sendMessage("success");
+    AddLog("Succesfully added pizzas to cook!");
 }
 
 // Function used by parent process (reception) in order to request current
