@@ -61,7 +61,6 @@ void Kitchen::respondPizzaOrder(std::string msg) {
     SplitString orders(msg, ";");
     std::vector<Pizza> pizzas;
 
-    std::cout << "Received new pizza order request..." << std::endl;   
     AddLog("Received new pizza order request...");
     // Attempt to deserializa every pizza
     for (auto order = orders._tokens.begin(); order != orders._tokens.end(); ++order) {
@@ -74,7 +73,7 @@ void Kitchen::respondPizzaOrder(std::string msg) {
     }
 
     // Check if kitchen has capacity for new order
-    if (pizzas.size() + this->_pizzasCooking + this->_pizzaQueue.size() > 2 * this->_nbCooks) {
+    if (pizzas.size() + this->_pizzasCooking + this->_pizzaQueue.size() > 2 * (size_t)this->_nbCooks) {
         std::cout << "In this if : " << pizzas.size() + this->_pizzasCooking << std::endl;
         std::cout << "Capacity : " << 2 * this->_nbCooks << std::endl;
         this->sendMessage("failure");
@@ -85,7 +84,6 @@ void Kitchen::respondPizzaOrder(std::string msg) {
     this->_pizzaQueue.insert(this->_pizzaQueue.end(), pizzas.begin(), pizzas.end());
     this->sendMessage("success");
     AddLog("Succesfully added pizzas to cook!");
-    std::cout << "Succesfully added pizzas to cook!" << std::endl;
 }
 
 // Function used by parent process (reception) in order to request current

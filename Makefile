@@ -18,7 +18,7 @@ NAME	=	plazza
 
 CC	=	g++
 
-CPPFLAGS	=	-fPIC	-Wall	-Wextra
+CPPFLAGS	=	-fPIC	-Wall	-Wextra	-Werror -g3
 
 all:
 	$(CC)	$(CPPFLAGS)	-o	$(NAME)	$(SRC)
