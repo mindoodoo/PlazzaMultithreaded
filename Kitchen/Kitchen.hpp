@@ -46,9 +46,9 @@ class Kitchen : public ProcessEncapsulation {
         void handleMessages(std::string msg);
 
         // IPC functions
-        capacity_t requestCapacity() const;
+        capacity_t requestCapacity();
         bool requestOrder(std::vector<Pizza> &orders);
-        void respondCapacity() const;
+        void respondCapacity();
         void respondPizzaOrder(std::string msg);
 
         int getId() const;

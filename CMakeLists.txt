@@ -5,13 +5,18 @@ set(CMAKE_CXX_STANDARD 14)
 
 include_directories(Pizza)
 include_directories(Reception)
+include_directories(Log)
+include_directories(Kitchen)
+include_directories(.)
 
-add_executable(Plazza
+add_executable(plazza
+        Kitchen/Kitchen.cpp
+        Kitchen/Ipc.cpp
+        Kitchen/ProcessEncapsulation.cpp
+        Kitchen/SplitString.cpp
+        Kitchen/Timer.cpp
+        Kitchen/ThreadEncapsulation.cpp
+        LogEngine/Log.cpp
         Pizza/Pizza.cpp
         Reception/Reception.cpp
-        Kitchen/Kitchen.cpp
-        Kitchen/ProcessEncapsulation.cpp
-        Kitchen/Timer.cpp
-        LogEngine/Log.cpp
-        plazza.cpp
-        Kitchen/SplitString.cpp Kitchen/SplitString.hpp Kitchen/ThreadEncapsulation.cpp Kitchen/ThreadEncapsulation.hpp)
+        plazza.cpp)
