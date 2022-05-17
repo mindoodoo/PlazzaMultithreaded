@@ -15,6 +15,7 @@ add_executable(plazza
         Kitchen/ProcessEncapsulation.cpp
         Kitchen/SplitString.cpp
         Kitchen/Timer.cpp
+        Kitchen/ThreadEncapsulation.cpp
         LogEngine/Log.cpp
         Pizza/Pizza.cpp
         Reception/Reception.cpp
