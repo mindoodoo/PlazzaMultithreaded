@@ -5,8 +5,7 @@
 ** ProcessEncapsulation
 */
 
-#ifndef PROCESSENCAPSULATION_HPP_
-#define PROCESSENCAPSULATION_HPP_
+#pragma once
 
 #include <unistd.h>
 #include <sys/types.h>
@@ -16,7 +15,8 @@
 #include <fstream>
 #include <string>
 #include <sstream>
-#include <string.h>
+#include <cstring>
+#include "Ipc.hpp"
 
 class ProcessEncapsulation {
     public:
@@ -26,16 +26,10 @@ class ProcessEncapsulation {
         pid_t startProcess();
         virtual int processMain() = 0;
 
-        // IPC
-        std::string receiveMessage() const;
-        void sendMessage(std::string msg) const;
-
         // Getters
         pid_t getPid() const;
 
     protected:
         pid_t _pid;
-        std::string _ipcPath;
+        Ipc _ipc;
 };
-
-#endif /* !PROCESSENCAPSULATION_HPP_ */
