@@ -32,7 +32,7 @@ std::string Pizza::serialize() const {
 }
 
 Pizza::Pizza(std::string serialization) {
-    int sepIndex;
+    int sepIndex = 0;
 
     sepIndex = serialization.find(";");
     if (sepIndex == std::string::npos)

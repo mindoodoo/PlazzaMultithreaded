@@ -5,8 +5,11 @@
 ## Makefile
 ##
 
-SRC	=	Reception/reception.cpp				\
-		Pizza/Pizza.cpp
+SRC	=	plazza.cpp				\
+		Reception/reception.cpp	\
+		Pizza/Pizza.cpp			\
+		Kitchen/
+
 
 NAME	=	plazza
 
