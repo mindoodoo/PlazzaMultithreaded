@@ -13,6 +13,8 @@
 #include <fstream>
 #include <sstream>
 #include "../Pizza/Pizza.hpp"
+#include "../LogEngine/Log.hpp"
+#include "../Kitchen/Kitchen.hpp"
 #include <string>
 
 class Reception {
@@ -20,9 +22,14 @@ class Reception {
         Reception();
         ~Reception();
         void parsing();
-        void checkArg(std::vector<std::string> &sortinput);
+        void stockPizzaInVec(std::vector<std::string> &sortinput);
         void displayMenu();
-        void stockCSV();
+        void stockCSVMenuInVec();
+        PizzaSize convertSizeEnum(const std::string& str);
+        PizzaType convertTypeEnum(const std::string& str);
+        int checkErrorInput(std::vector<std::string> &sortinput);
+        void StockInputInVec(std::string input, std::vector<std::string> &sortinput);
+        void splitOrderInKitchen();
     private:
         std::vector<Pizza> _orders;
         std::vector<std::vector<std::string>> _CSVcontents;

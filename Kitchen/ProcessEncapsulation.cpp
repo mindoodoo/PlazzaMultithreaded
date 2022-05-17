@@ -10,7 +10,7 @@
 pid_t ProcessEncapsulation::startProcess() {
     this->_pid = fork();
 
-    if (!this->_pid)
+    if (!this->_pid) // If child
         this->processMain();
     return this->_pid;
 }
@@ -29,6 +29,7 @@ std::string ProcessEncapsulation::receiveMessage() const
 {
     std::ifstream ipcStream(this->_ipcPath);
     std::stringstream ss;
+
 
     ss << ipcStream.rdbuf();
     return ss.str();

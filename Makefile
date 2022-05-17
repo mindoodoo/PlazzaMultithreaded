@@ -5,17 +5,20 @@
 ## Makefile
 ##
 
-SRC	=	plazza.cpp				\
-		Reception/reception.cpp	\
-		Pizza/Pizza.cpp			\
-		Kitchen/
-
+SRC	=	Reception/Reception.cpp				\
+		Pizza/Pizza.cpp						\
+		LogEngine/Log.cpp					\
+		Kitchen/Kitchen.cpp					\
+		Kitchen/ProcessEncapsulation.cpp 	\
+		Kitchen/SplitString.cpp				\
+		Kitchen/Timer.cpp					\
+		plazza.cpp
 
 NAME	=	plazza
 
 CC	=	g++
 
-CPPFLAGS	=	-fPIC	-Wall	-Werror	-Wextra
+CPPFLAGS	=	-fPIC	-Wall	-Wextra	-Werror -g3
 
 all:
 	$(CC)	$(CPPFLAGS)	-o	$(NAME)	$(SRC)

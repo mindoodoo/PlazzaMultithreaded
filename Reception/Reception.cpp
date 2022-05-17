@@ -5,13 +5,13 @@
 ** Main
 */
 
-#include "reception.hpp"
+#include "Reception.hpp"
 
 Reception::Reception() {}
 
 Reception::~Reception() {}
 
-void SortString(std::string input, std::vector<std::string> &sortinput) {
+void Reception::StockInputInVec(std::string input, std::vector<std::string> &sortinput) {
 	std::string temp = "";
     sortinput.clear();
 
@@ -29,7 +29,7 @@ void SortString(std::string input, std::vector<std::string> &sortinput) {
 	sortinput.push_back(temp);
 }
 
-void Reception::stockCSV() {
+void Reception::stockCSVMenuInVec() {
     std::string Filename = "Reception/Menu.csv";
     std::vector<std::string> CSVrow;
     std::string line;
@@ -51,17 +51,16 @@ void Reception::stockCSV() {
 }
 
 void Reception::displayMenu() {
-    int j = 31;
+    int color = 31;
 
     for (size_t i = 1; i < 5; i++) {
-        std::cout << "\033[1;" << j << "m" << _CSVcontents[i][0] << "\033[0m ";
+        std::cout << "\033[1;" << color << "m" << _CSVcontents[i][0] << "\033[0m ";
 		std::cout << "\n";
-        j++;
+        color++;
 	}
 }
 
-PizzaSize convertSize(const std::string& str)
-{
+PizzaSize Reception::convertSizeEnum(const std::string& str) {
     if(str == "S")
         return PizzaSize::S;
     else if(str == "M")
@@ -72,12 +71,11 @@ PizzaSize convertSize(const std::string& str)
         return PizzaSize::XL;
     else if(str == "XXL")
         return PizzaSize::XXL;
-    std::cout << "WARNING, YOU CAN ACCESS HER, PLEASE CHECK CONVERTSIZE FUNCTION" << std::endl;
+    std::cout << "WARNING, YOU MUST NOT BE HERE, PLEASE CHECK CONVERTSIZE FUNCTION FOR SOLVE THIS PROBLEM !" << std::endl;
     return PizzaSize::XXL;
 }
 
-PizzaType convertType(const std::string& str)
-{
+PizzaType Reception::convertTypeEnum(const std::string& str) {
     if(str == "megina")
         return PizzaType::megina;
     else if(str == "margarita")
@@ -86,13 +84,12 @@ PizzaType convertType(const std::string& str)
         return PizzaType::americana;
     else if(str == "fantasia")
         return PizzaType::fantasia;
-    std::cout << "WARNING, YOU CAN ACCESS HER, PLEASE CHECK CONVERTTYPE FUNCTION" << std::endl;
+    std::cout << "WARNING, YOU MUST NOT BE HERE, PLEASE CHECK CONVERTTYPE FUNCTION FOR SOLVE THIS PROBLEM !" << std::endl;
     return PizzaType::fantasia;
 }
 
-int checkArgNbr(std::vector<std::string> &sortinput) {
+int Reception::checkErrorInput(std::vector<std::string> &sortinput) {
     int arg = 0;
-    std::cout << sortinput[0] << "test" << std::endl;
     for (size_t i = 0; i < sortinput.size(); i++) {
         if (sortinput[i][0] == ';' ) {
 
@@ -110,7 +107,7 @@ int checkArgNbr(std::vector<std::string> &sortinput) {
     return 0;
 }
 
-void Reception::checkArg(std::vector<std::string> &sortinput) {
+void Reception::stockPizzaInVec(std::vector<std::string> &sortinput) {
     
     int done = 1;
     int nbPizzaOrder = 0;
@@ -150,8 +147,8 @@ void Reception::checkArg(std::vector<std::string> &sortinput) {
             break;
         } else {
             nbPizzaOrder = atoi(sortinput[i].substr(1, sortinput[i].length() - 1 ).c_str());
-            PizzaSize size = convertSize(sortinput[i - 1]);
-            PizzaType type = convertType(sortinput[i - 2]);
+            PizzaSize size = convertSizeEnum(sortinput[i - 1]);
+            PizzaType type = convertTypeEnum(sortinput[i - 2]);
             for (int j = 0; j < nbPizzaOrder; j++) {
                 _orders.push_back(Pizza(type, size));
                 pizzaAdd++;
@@ -170,23 +167,43 @@ void Reception::parsing() {
     while (true) {
         std::cout << "Enter your order: ";
         std::getline(std::cin, input);
-        stockCSV();
+        stockCSVMenuInVec();
         if (input == "clear")
             exit(0);
         if (input == "Menu") {
             displayMenu();
+            AddLog("Menu printed by the user");
         } else {
-            SortString(input, sortinput);
-            if (checkArgNbr(sortinput) == 84)
+            StockInputInVec(input, sortinput);
+            if (checkErrorInput(sortinput) == 84)
                 std::cout << "\033[1;31mBad order, your order must have this format:\n\tpizzaName SIZE xQUANT; [...]; pizzaName SIZE xQUANT\033[0m" << std::endl;
-            else
-                checkArg(sortinput);
+            else {
+                stockPizzaInVec(sortinput);
+                splitOrderInKitchen();
+            }
         }
     }
 }
 
-int main (void) {
-    Reception a;
-    a.parsing();
-    return 0;
+void Reception::splitOrderInKitchen() {
+    std::vector<Kitchen> kitchen;
+    std::vector<std::vector<Pizza>> pizza;
+    size_t argv = 3 * 2;
+    int a = 0;
+
+    pizza.push_back(std::vector<Pizza>());
+    for (size_t i = 0; i < _orders.size(); i++) {
+        if (pizza[a].size() == argv) {
+            a++;
+            pizza.push_back(std::vector<Pizza>());
+        }
+        pizza[a].push_back(_orders[i]);
+    }
+    for (size_t i = 0; i < pizza.size(); i++) {
+        Kitchen newKitchen = Kitchen(argv / 2, std::string("ipc/ipc") + std::to_string(i), i);
+        if (!newKitchen.startProcess())
+            exit(0); // This will have to be replaced by adequate frees in the future
+        kitchen.push_back(newKitchen);
+        kitchen[i].requestOrder(pizza[i]);
+    }
 }

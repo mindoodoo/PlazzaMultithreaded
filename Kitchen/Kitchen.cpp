@@ -9,10 +9,11 @@
 #include "Kitchen.hpp"
 
 
-Kitchen::Kitchen(int nbCooks, std::string &ipcPath) :
-    ProcessEncapsulation(ipcPath), _nbCooks(nbCooks) {
-        _ingredients = std::vector<size_t>(9, 5);
-    }
+Kitchen::Kitchen(int nbCooks, std::string ipcPath, int id) :
+ProcessEncapsulation(ipcPath), _nbCooks(nbCooks), _id(id),  _ipcPath(ipcPath) {
+    _ingredients = std::vector<size_t>(9, 5);
+    this->_pizzasCooking = 0;
+}
 
 int Kitchen::processMain()
 {
@@ -24,22 +25,65 @@ int Kitchen::processMain()
         // Handle communications
         newMessage = this->receiveMessage();
         this->handleMessages(newMessage);
-
     }
     return 0;
 }
 
+// Handles new incoming IPC messages for child process (actual kitchen)
+// Used in main loop in processMain()
 void Kitchen::handleMessages(std::string msg) {
-    if (msg == "capa") {
-        std::stringstream ss;
-        int totalCapa = 2 * this->_nbCooks;
+    SplitString splitMsg(msg, ",");
 
-        ss << totalCapa - this->_pizzasCooking - this->_pizzaQueue.size();
-        ss << ";";
-        ss << totalCapa;
+    // Invalid format check
+    if (splitMsg._tokens.size() < 1)
+        return;
+    if (splitMsg._tokens[0] == "capa")
+        this->respondCapacity();
+    if (splitMsg._tokens[0] == "order")
+        this->respondPizzaOrder(splitMsg._tokens[1]);
+}
 
-        this->sendMessage(ss.str());
+// Used by kichen process to respond to a request of capacity by the reception
+void Kitchen::respondCapacity() const {
+    std::stringstream ss;
+    int totalCapa = 2 * _nbCooks;
+
+    ss << totalCapa - _pizzasCooking - _pizzaQueue.size();
+    ss << ";";
+    ss << totalCapa;
+
+    sendMessage(ss.str());
+}
+
+// Attempts to deserialize pizza order
+// If successfull, adds pizzas to _pizzaQueue
+void Kitchen::respondPizzaOrder(std::string msg) {
+    SplitString orders(msg, ";");
+    std::vector<Pizza> pizzas;
+
+    AddLog("Received new pizza order request...");
+    // Attempt to deserializa every pizza
+    for (auto order = orders._tokens.begin(); order != orders._tokens.end(); ++order) {
+        try {
+            pizzas.emplace_back(Pizza(*order));
+        } catch (const std::invalid_argument& e) {
+            this->sendMessage("failure");
+            return;
+        }
     }
+
+    // Check if kitchen has capacity for new order
+    if (pizzas.size() + this->_pizzasCooking + this->_pizzaQueue.size() > 2 * (size_t)this->_nbCooks) {
+        std::cout << "In this if : " << pizzas.size() + this->_pizzasCooking << std::endl;
+        std::cout << "Capacity : " << 2 * this->_nbCooks << std::endl;
+        this->sendMessage("failure");
+        return;
+    }
+
+    // Add pizzas to queue and send success msg
+    this->_pizzaQueue.insert(this->_pizzaQueue.end(), pizzas.begin(), pizzas.end());
+    this->sendMessage("success");
+    AddLog("Succesfully added pizzas to cook!");
 }
 
 // Function used by parent process (reception) in order to request current
@@ -48,21 +92,46 @@ void Kitchen::handleMessages(std::string msg) {
 capacity_t Kitchen::requestCapacity() const {
     capacity_t output;
     std::string msg;
-    int sepIndex;
 
     this->sendMessage("capa");
-    std::this_thread::sleep_for(std::chrono::milliseconds(500)); // This sleep is temporary and only a way of avoiding to re read the message emitted
     msg = this->receiveMessage();
 
-    sepIndex = msg.find(";");
-    if (sepIndex == std::string::npos)
+    SplitString msgSplit(msg, ";");
+    if (msgSplit._tokens.size() <= 1)
         exit(84); // Not supposed to happen
 
     // Conversions will raise exceptions if error on conversion
     // Should not happen
-    output.free = std::stoi(msg.substr(0, sepIndex)); // Available capa first
-    output.totalCapacity = std::stoi(msg.substr(sepIndex + 1, std::string::npos)); // Total capa second
+    output.free = std::stoi(msgSplit._tokens[0]); // Available capa first
+    output.totalCapacity = std::stoi(msgSplit._tokens[1]); // Total capa second
     output.percentageFree = output.free * 100 / output.totalCapacity;
 
     return output;
+}
+
+// Used by parent process in order to request pizza order
+// Takes vector of pizza as argument
+// returns true if error and order not passed, false if success
+bool Kitchen::requestOrder(std::vector<Pizza> &orders) {
+    std::stringstream ss;
+
+    // Assemble order serialization
+    ss << "order,";
+    for (auto order = orders.begin(); order != orders.end(); ++order)
+        ss << *order << ";";
+    this->sendMessage(ss.str());
+
+    std::string response = this->receiveMessage();
+    if (response == "success")
+        return false;
+    return true;
+}
+
+int Kitchen::getId() const {
+    return _id;
+}
+
+Kitchen::~Kitchen() {
+    if (this->_pid)
+        std::remove(this->_ipcPath.c_str());
 }
