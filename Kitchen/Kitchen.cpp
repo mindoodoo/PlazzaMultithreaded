@@ -8,7 +8,6 @@
 #include <iostream>
 #include "Kitchen.hpp"
 
-
 Kitchen::Kitchen(int nbCooks, std::string ipcPath, int id, int refillTime) :
 ProcessEncapsulation(ipcPath), _nbCooks(nbCooks), _id(id),  _ipcPath(ipcPath), _refillTime(refillTime) {
     _ingredients = std::vector<size_t>(9, 5);

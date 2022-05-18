@@ -9,7 +9,7 @@
 
 #include <mutex>
 
-class MutexEcapsulation {
+class MutexEncapsulation {
 public:
     std::unique_lock<std::mutex> acquireLock();
 
