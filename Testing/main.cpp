@@ -1,14 +1,11 @@
 #include <iostream>
-#include "ThreadEncapsulation.hpp"
-
-void printNumbers(int a, int b, int c) {
-    std::cout << a << b << c << std::endl;
-}
+#include "../Kitchen/ThreadPool.hpp"
 
 int main()
 {
-    ThreadEncapsulation<int, int, int> thread(&printNumbers, 1, 2, 3);
-    thread.join();
+    ThreadPool pool(2);
+
+    pool.start();
 
     return 0;
 }
