@@ -26,6 +26,6 @@ private:
     int _nbThreads;
     int _activeThreads;
 
-    std::vector<ThreadEncapsulation<void*>> _workers;
+    std::vector<std::unique_ptr<ThreadEncapsulation<void*>>> _workers;
     std::function<void(Pizza, int)> _jobs;
 };
