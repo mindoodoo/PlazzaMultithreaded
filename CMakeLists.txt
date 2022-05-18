@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.22)
 project(Plazza)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 include_directories(Pizza)
 include_directories(Reception)
@@ -16,6 +16,8 @@ add_executable(plazza
         Kitchen/SplitString.cpp
         Kitchen/Timer.cpp
         Kitchen/ThreadEncapsulation.cpp
+        Kitchen/MutexEcapsulation.cpp
+        Kitchen/ThreadPool.cpp
         LogEngine/Log.cpp
         Pizza/Pizza.cpp
         Reception/Reception.cpp
