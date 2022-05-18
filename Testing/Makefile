@@ -5,9 +5,10 @@
 ## .
 ##
 
-CXXFLAGS = -I. -g3
+CXXFLAGS = -I../Pizza -g3
 
-SRC = main.cpp
+SRC = main.cpp \
+	../Kitchen/ThreadPool.cpp
 
 all: server clean
 

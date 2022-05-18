@@ -5,9 +5,9 @@
 ** .
 */
 
-#include "MutexEcapsulation.hpp"
+#include "MutexEncapsulation.hpp"
 
-std::unique_lock<std::mutex> MutexEcapsulation::acquireLock() {
+std::unique_lock<std::mutex> MutexEncapsulation::acquireLock() {
     std::unique_lock<std::mutex> lock(this->_lock);
 
     return lock;
