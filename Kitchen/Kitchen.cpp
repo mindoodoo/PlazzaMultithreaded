@@ -47,6 +47,7 @@ void Kitchen::handleMessages(std::string msg)
 // Used by kichen process to respond to a request of capacity by the reception
 void Kitchen::respondCapacity()
 {
+    std::cout << "Responding capacity request" << std::endl;
     std::stringstream ss;
     std::string msg;
     int totalCapa = 2 * _nbCooks;
@@ -55,6 +56,7 @@ void Kitchen::respondCapacity()
     ss << ";";
     ss << totalCapa;
     msg = ss.str();
+    std::cout << "Msg : " << msg << std::endl;
 
     msg >> this->_ipc;
 }
@@ -103,8 +105,9 @@ capacity_t Kitchen::requestCapacity()
 {
     capacity_t output;
     std::string response;
+    std::string msg = "capa";
 
-    (std::string &)"capa" >> this->_ipc;
+    msg >> this->_ipc;
     response << this->_ipc;
 
     SplitString msgSplit(response, ";");

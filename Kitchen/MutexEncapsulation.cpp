@@ -7,9 +7,10 @@
 
 #include "MutexEncapsulation.hpp"
 
-std::unique_lock<std::mutex> MutexEncapsulation::acquireLock()
-{
-    std::unique_lock lock(this->_lock);
+MutexEncapsulation::MutexEncapsulation() {
+    this->_lock = std::make_shared<std::mutex>();
+}
 
-    return lock;
+const std::shared_ptr<std::mutex> &MutexEncapsulation::getLock() const {
+    return _lock;
 }

@@ -7,13 +7,16 @@
 
 #pragma once
 
+#include <memory>
 #include <mutex>
 
 class MutexEncapsulation
 {
 public:
-    std::unique_lock<std::mutex> acquireLock();
+    MutexEncapsulation();
+
+    const std::shared_ptr<std::mutex> &getLock() const;
 
 private:
-    std::mutex _lock;
+    std::shared_ptr<std::mutex> _lock;
 };

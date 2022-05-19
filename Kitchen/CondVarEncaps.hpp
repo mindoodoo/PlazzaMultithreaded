@@ -14,7 +14,7 @@ public:
     void notifyAll();
 
     template <class Predicate>
-    void wait(std::unique_lock<std::mutex> &lock, Predicate lambda);
+    void wait(std::mutex &lock, Predicate lambda);
 
     const std::condition_variable &getCv() const;
 

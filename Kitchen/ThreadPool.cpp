@@ -31,21 +31,21 @@ template <class... argsTypes>
 void ThreadPool<argsTypes...>::pushJob(ThreadPool::Job newJob)
 {
     this->_jobs.push_back(newJob);
-    this->_cv.notifyOne();
+    this->_cv.notifyAll();
 }
 
 template <class... argsTypes>
 void ThreadPool<argsTypes...>::threadLoop(ThreadPool *pool)
 {
+    std::shared_ptr lock = pool->_lock.getLock();
+
     while (true)
     {
-        std::unique_lock lock(pool->_lock.acquireLock());
-
-        pool->_cv.wait(lock, [pool] {
+        pool->_cv.wait(*lock, [pool] {
             return !pool->_jobs.empty();
         });
         pool->_activeThreads++;
-
+//        std::cout << "Mutex status is : " << pool->_lock.getLock().try_lock() << std::endl;
         ThreadPool::Job newJob = pool->_jobs.front();
         pool->_jobs.pop_front();
         newJob.execFunction();
