@@ -31,7 +31,7 @@ template <class... argsTypes>
 void ThreadPool<argsTypes...>::pushJob(ThreadPool::Job newJob)
 {
     this->_jobs.push_back(newJob);
-    // Signal one
+    this->_cv.notifyOne();
 }
 
 template <class... argsTypes>
@@ -40,12 +40,16 @@ void ThreadPool<argsTypes...>::threadLoop(ThreadPool *pool)
     while (true)
     {
         std::unique_lock lock(pool->_lock.acquireLock());
-        pool->_cv.wait(lock, [pool]
-                       { return !pool->_jobs.empty(); });
+
+        pool->_cv.wait(lock, [pool] {
+            return !pool->_jobs.empty();
+        });
         pool->_activeThreads++;
-        std::function newJob = pool->_jobs.front();
+
+        ThreadPool::Job newJob = pool->_jobs.front();
         pool->_jobs.pop_front();
-        // Execute job
+        newJob.execFunction();
+
         pool->_activeThreads--;
     }
 }

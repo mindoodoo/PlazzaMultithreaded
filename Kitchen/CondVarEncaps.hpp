@@ -10,12 +10,11 @@
 
 class CondVarEncaps {
 public:
-    explicit CondVarEncaps(std::unique_lock<std::mutex> &lock);
     void notifyOne();
     void notifyAll();
 
     template <class Predicate>
-    void wait(Predicate lambda);
+    void wait(std::unique_lock<std::mutex> &lock, Predicate lambda);
 
     const std::condition_variable &getCv() const;
 

@@ -23,7 +23,6 @@ public:
 
     const std::string &getIpcPath() const;
 
-
 private:
     std::string _ipcPath;
 };
