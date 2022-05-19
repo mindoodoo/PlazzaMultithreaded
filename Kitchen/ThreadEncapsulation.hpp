@@ -18,8 +18,6 @@ class ThreadEncapsulation
 public:
     ThreadEncapsulation(std::function<void(args...)> f, args... argv);
 
-    virtual ~ThreadEncapsulation();
-
     void join();
     void detach();
 

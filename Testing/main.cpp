@@ -15,5 +15,8 @@ int main()
 
     pool.start();
 
+    for (int i = 10; i > 0; i--)
+        pool.pushJob(ThreadPool<int>::Job(waitSomeTime, i));
+
     return 0;
 }

@@ -12,6 +12,7 @@ SRC =	Pizza/Pizza.cpp						\
 		Kitchen/Kitchen.cpp					\
 		Kitchen/ProcessEncapsulation.cpp 	\
 		Kitchen/SplitString.cpp				\
+		Kitchen/MutexEncapsulation.cpp		\
 		Kitchen/Timer.cpp					\
 		Kitchen/Ipc.cpp						\
 		main.cpp

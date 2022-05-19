@@ -18,5 +18,5 @@ void CondVarEncaps::notifyAll() {
 
 template <class Predicate>
 void CondVarEncaps::wait(std::unique_lock<std::mutex> &lock, Predicate lambda) {
-    this->_cv.wait(this->_lock, lambda);
+    this->_cv.wait(lock, lambda);
 }

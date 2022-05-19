@@ -8,7 +8,7 @@
 #include "ThreadPool.hpp"
 
 template <class... argsTypes>
-ThreadPool<argsTypes...>::ThreadPool(int nbThreads) : _nbThreads(nbThreads)
+ThreadPool<argsTypes...>::ThreadPool(size_t nbThreads) : _nbThreads(nbThreads)
 {
     if (nbThreads > std::thread::hardware_concurrency())
     {
@@ -21,7 +21,7 @@ template <class... argsTypes>
 void ThreadPool<argsTypes...>::start()
 {
     this->_activeThreads = this->_nbThreads;
-    for (int i = 0; i < this->_nbThreads; i++)
+    for (size_t i = 0; i < this->_nbThreads; i++)
         this->_workers.push_back(std::make_unique<ThreadEncapsulation<ThreadPool *>>(ThreadPool::threadLoop, this));
     for (auto &thread : this->_workers)
         thread->join();

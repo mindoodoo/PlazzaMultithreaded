@@ -17,7 +17,6 @@ ThreadEncapsulation<args...>::ThreadEncapsulation(std::function<void(args...)> f
                                 {
         std::apply(this->_function, this->_arguments);
         this->_isRunning = false; });
-    std::cout << "YEYE" << std::endl;
     // std::this_thread::sleep_for(std::chrono::seconds(1));
 }
 
@@ -37,10 +36,4 @@ template <class... args>
 bool ThreadEncapsulation<args...>::isRunning() const
 {
     return _isRunning;
-}
-
-template <class... args>
-ThreadEncapsulation<args...>::~ThreadEncapsulation()
-{
-    std::cout << "YO" << std::endl;
 }

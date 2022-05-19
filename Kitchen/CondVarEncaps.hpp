@@ -19,6 +19,7 @@ public:
     const std::condition_variable &getCv() const;
 
 private:
-    std::unique_lock<std::mutex> _lock;
     std::condition_variable _cv;
 };
+
+#include "CondVarEncaps.cpp"

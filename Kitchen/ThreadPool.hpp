@@ -37,7 +37,7 @@ public:
         std::tuple<argsTypes...> _arguments;
     };
 
-    ThreadPool(int nbThreads);
+    ThreadPool(size_t nbThreads);
 
     void start();
     void pushJob(ThreadPool::Job newJob);
@@ -45,7 +45,7 @@ public:
     bool isInactive();
 
 private:
-    int _nbThreads;
+    size_t _nbThreads;
     int _activeThreads;
     MutexEncapsulation _lock;
     CondVarEncaps _cv;
@@ -53,3 +53,5 @@ private:
     std::vector<std::unique_ptr<ThreadEncapsulation<ThreadPool *>>> _workers;
     std::deque<ThreadPool::Job> _jobs;
 };
+
+#include "ThreadPool.cpp"
