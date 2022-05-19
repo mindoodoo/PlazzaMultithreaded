@@ -23,9 +23,10 @@ public:
 
     const std::string &getIpcPath() const;
 
-    friend std::string &operator<<(std::string &str, Ipc &ipc);
-    friend std::string &operator>>(std::string &str, Ipc &ipc);
 
 private:
     std::string _ipcPath;
 };
+
+std::string &operator<<(std::string &str, Ipc &ipc);
+std::string &operator>>(std::string &str, Ipc &ipc);
