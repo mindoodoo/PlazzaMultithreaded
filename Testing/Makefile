@@ -5,10 +5,16 @@
 ## .
 ##
 
-CXXFLAGS = -I../Pizza -g3
+CXXFLAGS = -I./Kitchen -I./Pizza -g3 -fPIC -Wall -Wextra
 
-SRC = main.cpp \
-	../Kitchen/ThreadPool.cpp
+SRC =	Pizza/Pizza.cpp						\
+		LogEngine/Log.cpp					\
+		Kitchen/Kitchen.cpp					\
+		Kitchen/ProcessEncapsulation.cpp 	\
+		Kitchen/SplitString.cpp				\
+		Kitchen/Timer.cpp					\
+		Kitchen/Ipc.cpp						\
+		main.cpp
 
 all: server clean
 

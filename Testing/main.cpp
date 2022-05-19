@@ -1,9 +1,17 @@
+#include <cstdlib>
 #include <iostream>
-#include "../Kitchen/ThreadPool.hpp"
+#include "ThreadPool.hpp"
+
+void waitSomeTime(int time)
+{
+    std::cout << "Waiting for : " << time << std::endl;
+    std::this_thread::sleep_for(std::chrono::seconds(time));
+    std::cout << "Done waiting for : " << time << std::endl;
+}
 
 int main()
 {
-    ThreadPool pool(2);
+    ThreadPool<int> pool(2);
 
     pool.start();
 
