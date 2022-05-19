@@ -7,7 +7,8 @@
 
 #include "ThreadPool.hpp"
 
-ThreadPool::ThreadPool(int nbThreads) : _nbThreads(nbThreads)
+template <class... argsTypes>
+ThreadPool<argsTypes...>::ThreadPool(int nbThreads) : _nbThreads(nbThreads)
 {
     if (nbThreads > std::thread::hardware_concurrency())
     {
@@ -16,7 +17,8 @@ ThreadPool::ThreadPool(int nbThreads) : _nbThreads(nbThreads)
     } // Note : this check should be replaced by an exception in the future
 }
 
-void ThreadPool::start()
+template <class... argsTypes>
+void ThreadPool<argsTypes...>::start()
 {
     this->_activeThreads = this->_nbThreads;
     for (int i = 0; i < this->_nbThreads; i++)
@@ -25,11 +27,14 @@ void ThreadPool::start()
         thread->join();
 }
 
-void ThreadPool::pushJob()
+template <class... argsTypes>
+void ThreadPool<argsTypes...>::pushJob(ThreadPool::Job newJob)
 {
+    this->_jobs.push_back(newJob);
 }
 
-void ThreadPool::threadLoop(ThreadPool *pool)
+template <class... argsTypes>
+void ThreadPool<argsTypes...>::threadLoop(ThreadPool *pool)
 {
     while (true)
     {
@@ -44,7 +49,8 @@ void ThreadPool::threadLoop(ThreadPool *pool)
     }
 }
 
-bool ThreadPool::isInactive()
+template <class... argsTypes>
+bool ThreadPool<argsTypes...>::isInactive()
 {
     return (_activeThreads == 0);
 }

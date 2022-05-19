@@ -16,7 +16,7 @@
 #include <string>
 #include <sstream>
 #include <cstring>
-#include "../ipc/Ipc.hpp"
+#include "Ipc.hpp"
 
 class ProcessEncapsulation
 {
