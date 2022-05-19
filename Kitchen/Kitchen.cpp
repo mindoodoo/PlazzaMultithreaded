@@ -35,6 +35,7 @@ void Kitchen::handleMessages(std::string msg)
 {
     SplitString splitMsg(msg, ",");
 
+    std::cout << "After if: " << msg << std::endl;
     // Invalid format check
     if (splitMsg._tokens.size() < 1)
         return;

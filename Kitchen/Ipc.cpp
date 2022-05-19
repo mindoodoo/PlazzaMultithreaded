@@ -11,23 +11,34 @@ Ipc::Ipc(const std::string &ipcPath) : _ipcPath(ipcPath)
 {
     if (mkfifo(ipcPath.c_str(), 0666) < 0)
         std::cerr << "Error creating fifo pipe : " << strerror(errno) << std::endl;
+    this->_readStream = new std::ifstream(this->_ipcPath);
+    this->_writeStream = new std::ofstream(this->_ipcPath);
+}
+
+std::string Ipc::getBuf() {
+    std::stringstream ss;
+    std::string output;
+
+    ss << this->_readStream->rdbuf();
+    output = ss.str();
+    return output;
+}
+
+void Ipc::sendBuf(std::string buf) {
+    *(this->_writeStream) << buf;
 }
 
 std::string &operator<<(std::string &str, Ipc &ipc)
 {
-    std::ifstream ipcStream(ipc.getIpcPath());
-    std::stringstream ss;
+    str = ipc.getBuf();
 
-    ss << ipcStream.rdbuf();
-    str = ss.str();
     return str;
 }
 
 std::string &operator>>(std::string &str, Ipc &ipc)
 {
-    std::ofstream ipcStream(ipc.getIpcPath());
+    ipc.sendBuf(str);
 
-    ipcStream << str;
     return str;
 }
 
