@@ -64,11 +64,10 @@ public:
 
         while (true)
         {
-            pool->_cv.wait(*lock, [pool] {
+            pool->_cv.wait(lock.get(), [pool] {
                 return !pool->_jobs.empty();
             });
             pool->_activeThreads++;
-//        std::cout << "Mutex status is : " << pool->_lock.getLock().try_lock() << std::endl;
             ThreadPool::Job newJob = pool->_jobs.front();
             pool->_jobs.pop_front();
             newJob.execFunction();

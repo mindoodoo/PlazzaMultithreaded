@@ -11,12 +11,12 @@ void waitSomeTime(int time)
 
 int main()
 {
-    ThreadPool<int> pool(2);
-
-    pool.start();
+    ThreadPool<int> pool(3);
 
     for (int i = 10; i > 0; i--)
         pool.pushJob(ThreadPool<int>::Job(waitSomeTime, i));
+
+    pool.start();
 
     return 0;
 }

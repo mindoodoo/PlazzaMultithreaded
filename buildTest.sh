@@ -1,0 +1,1 @@
+g++ -o testBin Pizza/*.cpp Kitchen/*.cpp LogEngine/*.cpp main.cpp -I./Kitchen -I./Pizza -g3 -fPIC -Wall -Wextra
