@@ -31,6 +31,7 @@ template <class... argsTypes>
 void ThreadPool<argsTypes...>::pushJob(ThreadPool::Job newJob)
 {
     this->_jobs.push_back(newJob);
+    // Signal one
 }
 
 template <class... argsTypes>

@@ -51,6 +51,5 @@ private:
     std::condition_variable _cv;
 
     std::vector<std::unique_ptr<ThreadEncapsulation<ThreadPool *>>> _workers;
-
     std::deque<ThreadPool::Job> _jobs;
 };

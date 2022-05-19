@@ -18,6 +18,7 @@ add_executable(plazza
         Kitchen/MutexEncapsulation.cpp
         Kitchen/ThreadEncapsulation.hpp
         Kitchen/ThreadPool.cpp
+        Kitchen/CondVarEncaps.cpp
         LogEngine/Log.cpp
         Pizza/Pizza.cpp
         Reception/Reception.cpp
