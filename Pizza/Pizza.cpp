@@ -7,7 +7,7 @@
 
 #include "Pizza.hpp"
 
-Pizza::Pizza(enum PizzaType type, enum PizzaSize size): _type(type), _size(size) 
+Pizza::Pizza(enum PizzaType type, enum PizzaSize size) : _type(type), _size(size)
 {
 }
 
@@ -15,15 +15,18 @@ Pizza::~Pizza()
 {
 }
 
-enum PizzaType Pizza::getType() const {
+enum PizzaType Pizza::getType() const
+{
     return _type;
 }
 
-enum PizzaSize Pizza::getSize() const {
+enum PizzaSize Pizza::getSize() const
+{
     return _size;
 }
 
-std::string Pizza::serialize() const {
+std::string Pizza::serialize() const
+{
     std::stringstream ss;
 
     ss << this->_type << "-";
@@ -31,7 +34,8 @@ std::string Pizza::serialize() const {
     return ss.str();
 }
 
-Pizza::Pizza(std::string serialization) {
+Pizza::Pizza(std::string serialization)
+{
     SplitString parsedStr(serialization, "-");
 
     // This check should eventually be replaced by custom exception
@@ -42,7 +46,8 @@ Pizza::Pizza(std::string serialization) {
     this->_size = PizzaSize(std::stoi(parsedStr._tokens[1]));
 }
 
-std::ostream &operator<<(std::ostream &os, const Pizza &pizza) {
+std::ostream &operator<<(std::ostream &os, const Pizza &pizza)
+{
     os << pizza.serialize();
 
     return os;

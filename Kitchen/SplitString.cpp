@@ -7,10 +7,12 @@
 #include "SplitString.hpp"
 
 SplitString::SplitString(std::string originalStr, std::string sep)
-        : _originalStr(originalStr) {
+    : _originalStr(originalStr)
+{
     size_t pos = 0;
 
-    while ((pos = originalStr.find(sep)) != std::string::npos) {
+    while ((pos = originalStr.find(sep)) != std::string::npos)
+    {
         this->_tokens.push_back(originalStr.substr(0, pos));
         originalStr.erase(0, pos + sep.length());
     }
@@ -18,6 +20,7 @@ SplitString::SplitString(std::string originalStr, std::string sep)
         this->_tokens.push_back(originalStr);
 }
 
-const std::string &SplitString::getOriginalStr() const {
+const std::string &SplitString::getOriginalStr() const
+{
     return _originalStr;
 }

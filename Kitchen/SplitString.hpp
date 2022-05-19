@@ -11,7 +11,8 @@
 #include <string>
 #include <iostream>
 
-class SplitString {
+class SplitString
+{
 public:
     // Builds new SplitString object
     // Splits string originalStr on sep

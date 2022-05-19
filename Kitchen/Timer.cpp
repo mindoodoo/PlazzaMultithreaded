@@ -4,11 +4,13 @@
 
 #include "Timer.hpp"
 
-Timer::Timer(float target): _target(target) {
+Timer::Timer(float target) : _target(target)
+{
     this->_start = std::chrono::high_resolution_clock::now();
 }
 
-bool Timer::isExpired() {
+bool Timer::isExpired()
+{
     if (this->_expired)
         return true;
     auto currentTime = std::chrono::high_resolution_clock::now();
@@ -18,7 +20,8 @@ bool Timer::isExpired() {
     return this->_expired;
 }
 
-void Timer::resetTimer() {
+void Timer::resetTimer()
+{
     this->_expired = false;
     this->_start = std::chrono::high_resolution_clock::now();
 }

@@ -7,9 +7,16 @@
 
 #include "ProcessEncapsulation.hpp"
 
-ProcessEncapsulation::ProcessEncapsulation(std::string &ipcPath): _ipc(ipcPath) {}
+ProcessEncapsulation::ProcessEncapsulation(std::string &ipcPath) : _ipc(ipcPath) {}
 
-pid_t ProcessEncapsulation::startProcess() {
+ProcessEncapsulation::~ProcessEncapsulation()
+{
+    if (this->_pid)
+        std::remove(this->_ipc.getIpcPath().c_str());
+}
+
+pid_t ProcessEncapsulation::startProcess()
+{
     this->_pid = fork();
 
     if (!this->_pid) // If child
@@ -17,6 +24,7 @@ pid_t ProcessEncapsulation::startProcess() {
     return this->_pid;
 }
 
-pid_t ProcessEncapsulation::getPid() const {
+pid_t ProcessEncapsulation::getPid() const
+{
     return _pid;
 }

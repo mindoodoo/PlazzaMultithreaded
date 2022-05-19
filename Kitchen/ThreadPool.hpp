@@ -14,7 +14,8 @@
 #include "Pizza.hpp"
 #include "ThreadEncapsulation.hpp"
 
-class ThreadPool {
+class ThreadPool
+{
 public:
     ThreadPool(int nbThreads);
 
@@ -30,6 +31,6 @@ private:
     std::mutex _lock;
     std::condition_variable _cv;
 
-    std::vector<std::unique_ptr<ThreadEncapsulation<ThreadPool*>>> _workers;
+    std::vector<std::unique_ptr<ThreadEncapsulation<ThreadPool *>>> _workers;
     std::deque<std::function<void(Pizza, int)>> _jobs;
 };

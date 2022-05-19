@@ -16,20 +16,21 @@
 #include <string>
 #include <sstream>
 #include <cstring>
-#include "Ipc.hpp"
+#include "../ipc/Ipc.hpp"
 
-class ProcessEncapsulation {
-    public:
-        ProcessEncapsulation(std::string &ipcPath);
-        ~ProcessEncapsulation() = default;
+class ProcessEncapsulation
+{
+public:
+    ProcessEncapsulation(std::string &ipcPath);
+    ~ProcessEncapsulation();
 
-        pid_t startProcess();
-        virtual int processMain() = 0;
+    pid_t startProcess();
+    virtual int processMain() = 0;
 
-        // Getters
-        pid_t getPid() const;
+    // Getters
+    pid_t getPid() const;
 
-    protected:
-        pid_t _pid;
-        Ipc _ipc;
+protected:
+    pid_t _pid;
+    Ipc _ipc;
 };

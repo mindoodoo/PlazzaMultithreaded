@@ -16,7 +16,8 @@
 #include <sstream>
 #include <cstring>
 
-class Ipc {
+class Ipc
+{
 public:
     Ipc(const std::string &ipcPath);
 
@@ -24,7 +25,7 @@ public:
 
     friend std::string &operator<<(std::string &str, Ipc &ipc);
     friend std::string &operator>>(std::string &str, Ipc &ipc);
+
 private:
     std::string _ipcPath;
 };
-

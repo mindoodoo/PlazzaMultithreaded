@@ -10,9 +10,11 @@
 #include <thread>
 #include <tuple>
 #include <functional>
+#include <iostream>
 
-template<class ...args>
-class ThreadEncapsulation {
+template <class... args>
+class ThreadEncapsulation
+{
 public:
     ThreadEncapsulation(std::function<void(args...)> f, args... argv);
 
