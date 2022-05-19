@@ -2,7 +2,6 @@
 **/*.o
 Bootstrap/bootstrap
 **/cmake-build-debug
-**/.idea
 sandbox.cpp
 a.out
 CMakeLists.txt
