@@ -202,6 +202,7 @@ void Reception::splitOrderInKitchen() {
             pizza.push_back(std::vector<Pizza>());
         }
         pizza[a].push_back(_orders[i]);
+        _orders.erase(_orders.begin());
     }
     for (size_t i = 0; i < pizza.size(); i++) {
         Kitchen newKitchen = Kitchen(this->_nbrCooksPerKitchen,

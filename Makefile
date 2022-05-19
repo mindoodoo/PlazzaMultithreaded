@@ -13,14 +13,14 @@ SRC	=	Reception/Reception.cpp				\
 		Kitchen/SplitString.cpp				\
 		Kitchen/Timer.cpp					\
 		Kitchen/Ipc.cpp						\
-		Kitchen/ThreadEncapsulation.cpp		\
+		Kitchen/ThreadEncapsulation.cpp 	\
 		plazza.cpp
 
 NAME	=	plazza
 
 CC	=	g++
 
-CPPFLAGS	=	-fPIC	-Wall	-Wextra	-Werror -g3
+CPPFLAGS	=	-fPIC	-Wall	-Wextra -g3
 
 all:
 	$(CC)	$(CPPFLAGS)	-o	$(NAME)	$(SRC)
