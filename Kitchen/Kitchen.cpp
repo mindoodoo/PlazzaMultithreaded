@@ -8,7 +8,7 @@
 #include <iostream>
 #include "Kitchen.hpp"
 
-Kitchen::Kitchen(int nbCooks, std::string ipcPath, int id, int refillTime) :
+Kitchen::Kitchen(size_t nbCooks, std::string ipcPath, size_t id, size_t refillTime) :
 ProcessEncapsulation(ipcPath), _nbCooks(nbCooks), _id(id),  _ipcPath(ipcPath), _refillTime(refillTime) {
     _ingredients = std::vector<size_t>(9, 5);
     this->_pizzasCooking = 0;
@@ -131,7 +131,7 @@ bool Kitchen::requestOrder(std::vector<Pizza> &orders) {
     return true;
 }
 
-int Kitchen::getId() const {
+size_t Kitchen::getId() const {
     return _id;
 }
 

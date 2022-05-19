@@ -1,0 +1,6 @@
+•   The first parameter is a multiplier for the cooking time of the pizzas.
+        Accept numbers with value in between 0 to 1 and more.
+
+•   The second parameter is the number of cooks per kitchen.
+
+•   The third parameter is the time in milliseconds, used by the kitchen stock to replace ingredients.

@@ -19,7 +19,7 @@
 
 class Reception {
     public:
-        Reception();
+        Reception(float multipTimeCook, size_t nbrCooksPerKitchen, size_t TimeRefill);
         ~Reception();
         void parsing();
         void stockPizzaInVec(std::vector<std::string> &sortinput);
@@ -31,6 +31,9 @@ class Reception {
         void StockInputInVec(std::string input, std::vector<std::string> &sortinput);
         void splitOrderInKitchen();
     private:
+        float _multipTimeCook;
+        size_t _nbrCooksPerKitchen;
+        size_t _TimeRefill;
         std::vector<Pizza> _orders;
         std::vector<std::vector<std::string>> _CSVcontents;
 };

@@ -16,8 +16,8 @@ ThreadEncapsulation<args...>::ThreadEncapsulation(std::function<void(args...)> f
         std::apply(this->_function, this->_arguments);
         this->_isRunning = false;
     });
-
-    this->_id = this->_thread.get_id();
+    std::cout << "YEYE" << std::endl;
+    //std::this_thread::sleep_for(std::chrono::seconds(1));
 }
 
 template<class ...args>
@@ -31,11 +31,11 @@ void ThreadEncapsulation<args...>::detach() {
 }
 
 template<class ...args>
-const std::thread::id &ThreadEncapsulation<args...>::getId() const {
-    return _id;
-}
-
-template<class ...args>
 bool ThreadEncapsulation<args...>::isRunning() const {
     return _isRunning;
+}
+
+template<class... args>
+ThreadEncapsulation<args...>::~ThreadEncapsulation() {
+    std::cout << "YO" << std::endl;
 }

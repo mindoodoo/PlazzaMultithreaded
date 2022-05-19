@@ -15,22 +15,28 @@ ThreadPool::ThreadPool(int nbThreads) : _nbThreads(nbThreads) {
 }
 
 void ThreadPool::start() {
-    for (int i = 0; i < _nbThreads; i++)
-        this->_workers.emplace_back(ThreadEncapsulation<void *>(ThreadPool::threadLoop, this));
-    for (auto thread = this->_workers.begin(); thread != this->_workers.end(); thread++)
+    this->_activeThreads = this->_nbThreads;
+    for (int i = 0; i < this->_nbThreads; i++)
+        this->_workers.push_back(std::make_unique<ThreadEncapsulation<ThreadPool*>>(ThreadPool::threadLoop, this));
+    for (auto &thread: this->_workers)
         thread->join();
-}
-
-void ThreadPool::stop() {
-
 }
 
 void ThreadPool::newJob() {
 
 }
-
-void ThreadPool::threadLoop(void *pool) {
-    return;
+void ThreadPool::threadLoop(ThreadPool *pool) {
+    while (true) {
+        pool->_lock.lock(); // Needs to be replaced with mutex encapsulation
+        std::unique_lock lock(pool->_lock);
+        pool->_cv.wait(lock, [pool] { return !pool->_jobs.empty(); });
+        pool->_activeThreads++;
+        std::function newJob = pool->_jobs.front();
+        pool->_jobs.pop_front();
+        // Needs condition var for refill (potentially)
+        // + generic way to pass arguments to jobs
+        //        newJob();
+    }
 }
 
 bool ThreadPool::isInactive() {

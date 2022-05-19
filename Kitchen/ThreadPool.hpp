@@ -8,6 +8,9 @@
 #pragma once
 
 #include <vector>
+#include <deque>
+#include <mutex>
+#include <condition_variable>
 #include "Pizza.hpp"
 #include "ThreadEncapsulation.hpp"
 
@@ -16,16 +19,17 @@ public:
     ThreadPool(int nbThreads);
 
     void start();
-    void stop();
     void newJob();
-    static void threadLoop(void *pool);
+    static void threadLoop(ThreadPool *pool);
 
     bool isInactive();
 
 private:
     int _nbThreads;
     int _activeThreads;
+    std::mutex _lock;
+    std::condition_variable _cv;
 
-    std::vector<ThreadEncapsulation<void*>> _workers;
-    std::function<void(Pizza, int)> _jobs;
+    std::vector<std::unique_ptr<ThreadEncapsulation<ThreadPool*>>> _workers;
+    std::deque<std::function<void(Pizza, int)>> _jobs;
 };

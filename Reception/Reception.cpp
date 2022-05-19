@@ -7,7 +7,11 @@
 
 #include "Reception.hpp"
 
-Reception::Reception() {}
+Reception::Reception(float multipTimeCook, size_t nbrCooksPerKitchen, size_t TimeRefill) {
+    this->_multipTimeCook = multipTimeCook;
+    this->_nbrCooksPerKitchen = nbrCooksPerKitchen;
+    this->_TimeRefill = TimeRefill;
+}
 
 Reception::~Reception() {}
 
@@ -188,21 +192,21 @@ void Reception::parsing() {
 void Reception::splitOrderInKitchen() {
     std::vector<Kitchen> kitchen;
     std::vector<std::vector<Pizza>> pizza;
-    size_t argv = 3 * 2;
+    size_t pizzaMax = this->_nbrCooksPerKitchen * 2;
     int a = 0;
 
     pizza.push_back(std::vector<Pizza>());
     for (size_t i = 0; i < _orders.size(); i++) {
-        if (pizza[a].size() == argv) {
+        if (pizza[a].size() == pizzaMax) {
             a++;
             pizza.push_back(std::vector<Pizza>());
         }
         pizza[a].push_back(_orders[i]);
     }
     for (size_t i = 0; i < pizza.size(); i++) {
-        Kitchen newKitchen = Kitchen(argv / 2,
+        Kitchen newKitchen = Kitchen(this->_nbrCooksPerKitchen,
                                      std::string("ipc/ipc") + std::to_string(i),
-                                     i, 0);
+                                     i, this->_TimeRefill);
         if (!newKitchen.startProcess())
             exit(0); // This will have to be replaced by adequate frees in the future
         kitchen.push_back(newKitchen);
