@@ -13,8 +13,6 @@ SRC	=	Reception/Reception.cpp				\
 		Kitchen/SplitString.cpp				\
 		Kitchen/Timer.cpp					\
 		Kitchen/Ipc.cpp						\
-		Kitchen/ThreadEncapsulation.cpp 	\
-		ipc/Ipc.cpp							\
 		plazza.cpp
 
 NAME	=	plazza
