@@ -16,12 +16,27 @@ template <class... args>
 class ThreadEncapsulation
 {
 public:
-    ThreadEncapsulation(std::function<void(args...)> f, args... argv);
+    ThreadEncapsulation(std::function<void(args...)> f, args... argv) {
+        this->_function = f;
+        this->_arguments = std::make_tuple(argv...);
 
-    void join();
-    void detach();
+        this->_thread = std::thread([this] {
+            std::apply(this->_function, this->_arguments);
+            this->_isRunning = false;
+        });
+    };
 
-    bool isRunning() const;
+    void join() {
+        this->_thread.join();
+    };
+
+    void detach() {
+        this->_thread.detach();
+    };
+
+    bool isRunning() const {
+        return _isRunning;
+    };
 
 private:
     std::function<void(args...)> _function;
@@ -29,5 +44,3 @@ private:
     bool _isRunning = true;
     std::thread _thread;
 };
-
-#include "ThreadEncapsulation.cpp"
