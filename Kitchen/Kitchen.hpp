@@ -38,7 +38,7 @@ enum INGREDIENTS {
 
 class Kitchen : public ProcessEncapsulation {
     public:
-        Kitchen(int nbCooks, std::string ipcPath, int id, int refillTime);
+        Kitchen(size_t nbCooks, std::string ipcPath, size_t id, size_t refillTime);
         ~Kitchen();
 
     // Main kitchen functions
@@ -51,14 +51,14 @@ class Kitchen : public ProcessEncapsulation {
         void respondCapacity();
         void respondPizzaOrder(std::string msg);
 
-        int getId() const;
+        size_t getId() const;
 
 
 
 private:
-    int _nbCooks;
+    size_t _nbCooks;
     int _pizzasCooking;
-    int _refillTime;
+    size_t _refillTime;
     const size_t _id;
     const std::string _ipcPath;
 
