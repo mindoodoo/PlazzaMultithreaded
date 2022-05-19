@@ -58,9 +58,9 @@ public:
 
 private:
     const size_t _nbCooks;
-    int _pizzasCooking;
-    const size_t _refillTime;
     const size_t _id;
+    const size_t _refillTime;
+    int _pizzasCooking;
 
     std::vector<Pizza> _pizzaQueue;
     std::vector<size_t> _ingredients;
