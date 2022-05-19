@@ -7,7 +7,11 @@
 
 #include "Reception.hpp"
 
-Reception::Reception() {}
+Reception::Reception(float multipTimeCook, size_t nbrCooksPerKitchen, size_t TimeRefill) {
+    this->_multipTimeCook = multipTimeCook;
+    this->_nbrCooksPerKitchen = nbrCooksPerKitchen;
+    this->_TimeRefill = TimeRefill;
+}
 
 Reception::~Reception() {}
 
