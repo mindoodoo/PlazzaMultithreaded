@@ -7,7 +7,8 @@
 #include <chrono>
 #include <iostream>
 
-class Timer {
+class Timer
+{
 public:
     Timer(float target);
     bool isExpired();

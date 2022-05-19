@@ -13,13 +13,15 @@
 #include <condition_variable>
 #include "Pizza.hpp"
 #include "ThreadEncapsulation.hpp"
+#include "MutexEncapsulation.hpp"
 
-class ThreadPool {
+class ThreadPool
+{
 public:
     ThreadPool(int nbThreads);
 
     void start();
-    void newJob();
+    void pushJob();
     static void threadLoop(ThreadPool *pool);
 
     bool isInactive();
@@ -27,9 +29,9 @@ public:
 private:
     int _nbThreads;
     int _activeThreads;
-    std::mutex _lock;
+    MutexEncapsulation _lock;
     std::condition_variable _cv;
 
-    std::vector<std::unique_ptr<ThreadEncapsulation<ThreadPool*>>> _workers;
+    std::vector<std::unique_ptr<ThreadEncapsulation<ThreadPool *>>> _workers;
     std::deque<std::function<void(Pizza, int)>> _jobs;
 };
