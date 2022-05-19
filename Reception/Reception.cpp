@@ -204,7 +204,9 @@ void Reception::splitOrderInKitchen() {
         pizza[a].push_back(_orders[i]);
     }
     for (size_t i = 0; i < pizza.size(); i++) {
-        Kitchen newKitchen = Kitchen(argv / 2, std::string("ipc/ipc") + std::to_string(i), i);
+        Kitchen newKitchen = Kitchen(argv / 2,
+                                     std::string("ipc/ipc") + std::to_string(i),
+                                     i, 0);
         if (!newKitchen.startProcess())
             exit(0); // This will have to be replaced by adequate frees in the future
         kitchen.push_back(newKitchen);
