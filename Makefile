@@ -12,9 +12,8 @@ SRC	=	Reception/Reception.cpp				\
 		Kitchen/ProcessEncapsulation.cpp 	\
 		Kitchen/SplitString.cpp				\
 		Kitchen/Timer.cpp					\
-		ipc/Ipc.cpp						\
+		ipc/Ipc.cpp							\
 		plazza.cpp
-		# Kitchen/ThreadEncapsulation.cpp		\
 
 NAME	=	plazza
 
