@@ -25,23 +25,22 @@ void ThreadPool::start()
         thread->join();
 }
 
-void ThreadPool::newJob()
+void ThreadPool::pushJob()
 {
 }
+
 void ThreadPool::threadLoop(ThreadPool *pool)
 {
     while (true)
     {
-        pool->_lock.lock(); // Needs to be replaced with mutex encapsulation
-        std::unique_lock lock(pool->_lock);
+        std::unique_lock lock(pool->_lock.acquireLock());
         pool->_cv.wait(lock, [pool]
                        { return !pool->_jobs.empty(); });
         pool->_activeThreads++;
         std::function newJob = pool->_jobs.front();
         pool->_jobs.pop_front();
-        // Needs condition var for refill (potentially)
-        // + generic way to pass arguments to jobs
-        //        newJob();
+        // Execute job
+        pool->_activeThreads--;
     }
 }
 
