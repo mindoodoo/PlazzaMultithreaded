@@ -233,29 +233,32 @@ void Reception::parsing()
 void Reception::splitOrderInKitchen()
 {
     std::vector<Kitchen> kitchen;
-    std::vector<std::vector<Pizza>> pizza;
-    size_t pizzaMax = this->_nbrCooksPerKitchen * 2;
-    int a = 0;
+    std::vector<Pizza> pizza;
 
-    pizza.push_back(std::vector<Pizza>());
-    for (size_t i = 0; i < _orders.size(); i++)
-    {
-        if (pizza[a].size() == pizzaMax)
-        {
-            a++;
-            pizza.push_back(std::vector<Pizza>());
+    int buff = 0;
+    int id = 0;
+    int newid = 0;
+    while (_orders.size() > 0) {
+        for (size_t i = 0; i < kitchen.size(); i++) {
+            if (kitchen[i].requestCapacity().free > buff) {
+                buff = kitchen[i].requestCapacity().free;
+                id = i;
+            }
         }
-        pizza[a].push_back(_orders[i]);
-        _orders.erase(_orders.begin());
+        if (buff == 0) {
+            Kitchen newKitchen = Kitchen(std::string("ipc/ipc") + std::to_string(newid),
+                                 this->_nbrCooksPerKitchen,
+                                 newid, this->_TimeRefill);
+            newid++;
+            if (!newKitchen.startProcess())
+                exit(0); // This will have to be replaced by adequate frees in the future
+            kitchen.push_back(newKitchen);
+        } else {
+            pizza.push_back(_orders[0]);
+            kitchen[id].requestOrder(pizza);
+            _orders.erase(_orders.begin());
+            pizza.erase(pizza.begin());
+        }
     }
-    for (size_t i = 0; i < pizza.size(); i++)
-    {
-        Kitchen newKitchen = Kitchen(std::string("ipc/ipc") + std::to_string(i),
-                                     this->_nbrCooksPerKitchen,
-                                     i, this->_TimeRefill);
-        if (!newKitchen.startProcess())
-            exit(0); // This will have to be replaced by adequate frees in the future
-        kitchen.push_back(newKitchen);
-        kitchen[i].requestOrder(pizza[i]);
-    }
+    std::cout << "la" << std::endl;
 }
