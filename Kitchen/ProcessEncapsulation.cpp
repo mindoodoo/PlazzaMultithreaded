@@ -22,11 +22,13 @@ pid_t ProcessEncapsulation::startProcess()
     this->_pid = fork();
 
     if (!this->_pid) { // If child
-        this->_ipc.openRead();
         this->_ipc.openWrite();
         this->processMain();
     } else {
         this->_ipc.openRead();
+        std::string msgRead;
+        msgRead << this->_ipc;
+        std::cout << msgRead << std::endl;
         this->_ipc.openWrite();
     }
     return this->_pid;

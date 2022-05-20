@@ -17,7 +17,7 @@ Kitchen::Kitchen(std::string ipcPath, const size_t nbCooks, const size_t id, con
 
 int Kitchen::processMain()
 {
-    Timer timeoutTimer(5);
+    Timer timeoutTimer(10);
     std::string newMessage;
 
     // Lambda function used to launch member function in msg handling thread
@@ -30,6 +30,7 @@ int Kitchen::processMain()
 
     // Main kitchen loop
     while (!timeoutTimer.isExpired());
+
     return 0;
 }
 
@@ -37,6 +38,10 @@ int Kitchen::processMain()
 // Used in main loop in processMain()
 void Kitchen::handleMessages()
 {
+    std::string greeting = "Kitchen open for business !";
+    greeting >> this->_ipc;
+    this->_ipc.openRead();
+
     std::string msg;
     msg << this->_ipc;
     SplitString splitMsg(msg, ",");

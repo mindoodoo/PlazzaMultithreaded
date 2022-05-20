@@ -254,8 +254,10 @@ void Reception::splitOrderInKitchen()
                                  this->_nbrCooksPerKitchen,
                                  newid, this->_TimeRefill);
             newid++;
-            if (!newKitchen.startProcess())
+            if (!newKitchen.startProcess()) {
+                std::cout << "In process child exit" << std::endl;
                 exit(0); // This will have to be replaced by adequate frees in the future
+            }
             kitchen.push_back(newKitchen);
         } else {
             pizza.push_back(_orders[0]);
