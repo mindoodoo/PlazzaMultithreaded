@@ -20,11 +20,12 @@ int Kitchen::processMain()
     Timer timeoutTimer(10);
     std::string newMessage;
 
+    std::cout << "BEFORE launching handle message loop" << std::endl;
     // Lambda function used to launch member function in msg handling thread
     std::function launchThread = [](Kitchen *ptr) {
         ptr->handleMessages();
     };
-
+    std::cout << "After launching handle message loop" << std::endl;
     // Launch handle message thread
     ThreadEncapsulation<Kitchen*> ipcHandlingThread(launchThread, this);
 
@@ -39,11 +40,15 @@ int Kitchen::processMain()
 void Kitchen::handleMessages()
 {
     std::string greeting = "Kitchen open for business !";
+    std::cout << greeting << std::endl;
+    greeting >> this->_ipc;
     greeting >> this->_ipc;
     this->_ipc.openRead();
+    std::cout << "After sending greeting and opening ipc for read" << std::endl;
 
     std::string msg;
-    msg << this->_ipc;
+    msg << this->_ipc; // BLOCKS HERE
+    std::cout << "After reading new message in handleMessage()" << std::endl;
     SplitString splitMsg(msg, ",");
 
     std::cout << "After if: " << msg << std::endl;

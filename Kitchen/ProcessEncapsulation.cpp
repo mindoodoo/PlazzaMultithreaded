@@ -25,11 +25,16 @@ pid_t ProcessEncapsulation::startProcess()
         this->_ipc.openWrite();
         this->processMain();
     } else {
+        std::cout << "PARENT: Opening read for parent process" << std::endl << std::endl;
         this->_ipc.openRead();
+        std::cout << "PARENT: After opening read for parent process" << std::endl;
         std::string msgRead;
-        msgRead << this->_ipc;
+        std::cout << "PARENT: Before reading new msg for PARENT process" << std::endl;
+        msgRead << this->_ipc; // BLOCKS HERE
+        std::cout << "PARENT: After reading message for parent process" << std::endl;
         std::cout << msgRead << std::endl;
         this->_ipc.openWrite();
+        std::cout << "PARENT: After opening write for parent process" << std::endl;
     }
     return this->_pid;
 }
