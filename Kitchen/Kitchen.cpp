@@ -20,20 +20,25 @@ int Kitchen::processMain()
     Timer timeoutTimer(5);
     std::string newMessage;
 
+    // Lambda function used to launch member function in msg handling thread
+    std::function launchThread = [](Kitchen *ptr) {
+        ptr->handleMessages();
+    };
+
+    // Launch handle message thread
+    ThreadEncapsulation<Kitchen*> ipcHandlingThread(launchThread, this);
+
     // Main kitchen loop
-    while (!timeoutTimer.isExpired())
-    {
-        // Handle communications
-        newMessage << this->_ipc;
-        this->handleMessages(newMessage);
-    }
+    while (!timeoutTimer.isExpired());
     return 0;
 }
 
 // Handles new incoming IPC messages for child process (actual kitchen)
 // Used in main loop in processMain()
-void Kitchen::handleMessages(std::string msg)
+void Kitchen::handleMessages()
 {
+    std::string msg;
+    msg << this->_ipc;
     SplitString splitMsg(msg, ",");
 
     std::cout << "After if: " << msg << std::endl;

@@ -17,6 +17,7 @@
 #include "Timer.hpp"
 #include "SplitString.hpp"
 #include "../LogEngine/Log.hpp"
+#include "ThreadEncapsulation.hpp"
 
 typedef struct
 {
@@ -46,7 +47,7 @@ public:
 
     // Main kitchen functions
     int processMain() override;
-    void handleMessages(std::string msg);
+    void handleMessages();
 
     // IPC functions
     capacity_t requestCapacity();
