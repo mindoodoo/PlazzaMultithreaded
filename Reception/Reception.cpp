@@ -216,8 +216,9 @@ void Reception::parsing()
             displayMenu();
             AddLog("Menu printed by the user");
         }
-        else
-        {
+        if (input.empty())
+            std::cout << "\033[1;31mBad order, your order must have this format:\n\tpizzaName SIZE xQUANT; [...]; pizzaName SIZE xQUANT\033[0m" << std::endl;
+        else {
             StockInputInVec(input, sortinput);
             if (checkErrorInput(sortinput) == 84)
                 std::cout << "\033[1;31mBad order, your order must have this format:\n\tpizzaName SIZE xQUANT; [...]; pizzaName SIZE xQUANT\033[0m" << std::endl;
