@@ -1,1 +1,17 @@
 20-05-2022 12:23:13	Menu printed by the user
+20-05-2022 15:46:14	Menu printed by the user
+20-05-2022 15:47:02	Menu printed by the user
+20-05-2022 15:47:26	Menu printed by the user
+20-05-2022 15:47:57	Menu printed by the user
+20-05-2022 15:48:37	Menu printed by the user
+20-05-2022 15:49:08	Menu printed by the user
+20-05-2022 15:49:48	Menu printed by the user
+20-05-2022 15:50:34	Menu printed by the user
+20-05-2022 15:53:24	Menu printed by the user
+20-05-2022 15:54:29	Menu printed by the user
+20-05-2022 15:54:41	Menu printed by the user
+20-05-2022 15:55:28	Menu printed by the user
+20-05-2022 15:59:26	Menu printed by the user
+20-05-2022 16:00:17	Menu printed by the user
+20-05-2022 16:00:38	Menu printed by the user
+20-05-2022 16:05:14	Menu printed by the user

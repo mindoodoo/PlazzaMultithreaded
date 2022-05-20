@@ -209,14 +209,14 @@ void Reception::inputLoop()
         std::cout << "Enter your order: ";
         std::getline(std::cin, input);
         stockCSVMenuInVec();
-        if (input == "clear")
-            exit(0);
+        if (input == "close")
+            break;
         if (input == "Menu")
         {
             displayMenu();
             AddLog("Menu printed by the user");
         }
-        if (input.empty())
+        else if (input.empty())
             std::cout << "\033[1;31mBad order, your order must have this format:\n\tpizzaName SIZE xQUANT; [...]; pizzaName SIZE xQUANT\033[0m" << std::endl;
         else {
             StockInputInVec(input, sortinput);
