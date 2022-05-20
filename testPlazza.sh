@@ -1,0 +1,1 @@
+echo "margarita XXL x2" | ./plazza 2 5 2000

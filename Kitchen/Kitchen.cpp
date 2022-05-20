@@ -10,6 +10,7 @@
 
 Kitchen::Kitchen(std::string ipcPath, const size_t nbCooks, const size_t id, const size_t refillTime) : ProcessEncapsulation(ipcPath), _nbCooks(nbCooks), _id(id), _refillTime(refillTime)
 {
+    std::cout << "In kitchen constructor" << std::endl;
     _ingredients = std::vector<size_t>(9, 5);
     this->_pizzasCooking = 0;
 }
