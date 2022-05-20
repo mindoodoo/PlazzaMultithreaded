@@ -68,6 +68,6 @@ int main(int argc, char **argv)
         return 84;
     }
     Reception a(c.getMultiplier(), c.getnbrCooks(), c.getTimeRefill());
-    a.parsing();
+    a.inputLoop();
     return 0;
 }

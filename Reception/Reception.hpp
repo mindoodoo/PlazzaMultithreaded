@@ -22,7 +22,7 @@ class Reception
 public:
     Reception(float multipTimeCook, size_t nbrCooksPerKitchen, size_t TimeRefill);
     ~Reception();
-    void parsing();
+    void inputLoop();
     void stockPizzaInVec(std::vector<std::string> &sortinput);
     void displayMenu();
     void stockCSVMenuInVec();

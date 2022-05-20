@@ -198,7 +198,7 @@ void Reception::stockPizzaInVec(std::vector<std::string> &sortinput)
     }
 }
 
-void Reception::parsing()
+void Reception::inputLoop()
 {
     std::string input;
     std::vector<std::string> sortinput;
