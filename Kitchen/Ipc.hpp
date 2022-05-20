@@ -15,6 +15,7 @@
 #include <iostream>
 #include <sstream>
 #include <cstring>
+#include <thread>
 
 class Ipc
 {
@@ -22,6 +23,12 @@ public:
     Ipc(const std::string &ipcPath);
 
     const std::string &getIpcPath() const;
+
+    // Open named pipe function
+    void openRead();
+    void openWrite();
+
+    // Read / Write to named pipe, for use in operator overloading
     std::string getBuf();
     void sendBuf(std::string buf);
 

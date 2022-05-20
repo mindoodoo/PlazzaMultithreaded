@@ -240,12 +240,15 @@ void Reception::splitOrderInKitchen()
     int newid = 0;
     while (_orders.size() > 0) {
         for (size_t i = 0; i < kitchen.size(); i++) {
+            std::cout << "Requesting capacity from kitchens" << std::endl;
             if (kitchen[i].requestCapacity().free > buff) {
+                std::cout << "Updating buffer" << std::endl;
                 buff = kitchen[i].requestCapacity().free;
                 id = i;
             }
         }
         if (buff == 0) {
+            std::cout << "Instantiating new Kitchen" << std::endl;
             Kitchen newKitchen = Kitchen(std::string("ipc/ipc") + std::to_string(newid),
                                  this->_nbrCooksPerKitchen,
                                  newid, this->_TimeRefill);
