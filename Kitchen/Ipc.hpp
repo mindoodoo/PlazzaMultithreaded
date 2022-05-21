@@ -24,18 +24,13 @@ public:
 
     const std::string &getIpcPath() const;
 
-    // Open named pipe function
-    void openRead();
-    void openWrite();
-
     // Read / Write to named pipe, for use in operator overloading
     std::string getBuf();
     void sendBuf(std::string buf);
 
 private:
     std::string _ipcPath;
-    std::ifstream *_readStream;
-    std::ofstream *_writeStream;
+    std::fstream _fileStream;
 };
 
 std::string &operator<<(std::string &str, Ipc &ipc);
