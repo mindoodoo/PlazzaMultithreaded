@@ -32,5 +32,5 @@ public:
 
 protected:
     pid_t _pid;
-    Ipc _ipc;
+    Ipc *_ipc;
 };

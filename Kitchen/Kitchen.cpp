@@ -10,7 +10,6 @@
 
 Kitchen::Kitchen(std::string ipcPath, const size_t nbCooks, const size_t id, const size_t refillTime) : ProcessEncapsulation(ipcPath), _nbCooks(nbCooks), _id(id), _refillTime(refillTime)
 {
-    std::cout << "In kitchen constructor" << std::endl;
     _ingredients = std::vector<size_t>(9, 5);
     this->_pizzasCooking = 0;
 }
@@ -19,13 +18,12 @@ int Kitchen::processMain()
 {
     Timer timeoutTimer(10);
     std::string newMessage;
+    std::cout << "In process main" << std::endl;
 
-    std::cout << "BEFORE launching handle message loop" << std::endl;
     // Lambda function used to launch member function in msg handling thread
     std::function launchThread = [](Kitchen *ptr) {
         ptr->handleMessages();
     };
-    std::cout << "After launching handle message loop" << std::endl;
     // Launch handle message thread
     ThreadEncapsulation<Kitchen*> ipcHandlingThread(launchThread, this);
 
@@ -39,19 +37,11 @@ int Kitchen::processMain()
 // Used in main loop in processMain()
 void Kitchen::handleMessages()
 {
-    std::string greeting = "Kitchen open for business !";
-    std::cout << greeting << std::endl;
-    greeting >> this->_ipc;
-    greeting >> this->_ipc;
-    this->_ipc.openRead();
-    std::cout << "After sending greeting and opening ipc for read" << std::endl;
-
     std::string msg;
-    msg << this->_ipc; // BLOCKS HERE
-    std::cout << "After reading new message in handleMessage()" << std::endl;
+    msg << (*this->_ipc);
     SplitString splitMsg(msg, ",");
 
-    std::cout << "After if: " << msg << std::endl;
+    // std::cout << "Handling msg : " << msg << std::endl;
     // Invalid format check
     if (splitMsg._tokens.size() < 1)
         return;
@@ -64,18 +54,20 @@ void Kitchen::handleMessages()
 // Used by kichen process to respond to a request of capacity by the reception
 void Kitchen::respondCapacity()
 {
-    std::cout << "Responding capacity request" << std::endl;
     std::stringstream ss;
     std::string msg;
     int totalCapa = 2 * _nbCooks;
+
+    // std::cout << "In respond capacity" << std::endl;
 
     ss << totalCapa - _pizzasCooking - _pizzaQueue.size();
     ss << ";";
     ss << totalCapa;
     msg = ss.str();
-    std::cout << "Msg : " << msg << std::endl;
 
-    msg >> this->_ipc;
+    msg >> *(this->_ipc);
+    
+    // std::cout << "After sending response" << std::endl;
 }
 
 // Attempts to deserialize pizza order
@@ -84,6 +76,8 @@ void Kitchen::respondPizzaOrder(std::string msg)
 {
     SplitString orders(msg, ";");
     std::vector<Pizza> pizzas;
+    std::string failure = "failure";
+    std::string success = "success";
 
     AddLog("Received new pizza order request...");
     // Attempt to deserializa every pizza
@@ -95,7 +89,7 @@ void Kitchen::respondPizzaOrder(std::string msg)
         }
         catch (const std::invalid_argument &e)
         {
-            (std::string &)"failure" >> this->_ipc;
+            failure >> *(this->_ipc);
             return;
         }
     }
@@ -103,15 +97,13 @@ void Kitchen::respondPizzaOrder(std::string msg)
     // Check if kitchen has capacity for new order
     if (pizzas.size() + this->_pizzasCooking + this->_pizzaQueue.size() > 2 * (size_t)this->_nbCooks)
     {
-        std::cout << "In this if : " << pizzas.size() + this->_pizzasCooking << std::endl;
-        std::cout << "Capacity : " << 2 * this->_nbCooks << std::endl;
-        (std::string &)"failure" >> this->_ipc;
+        failure >> *(this->_ipc);
         return;
     }
 
     // Add pizzas to queue and send success msg
     this->_pizzaQueue.insert(this->_pizzaQueue.end(), pizzas.begin(), pizzas.end());
-    (std::string &)"success" >> this->_ipc;
+    success >> *(this->_ipc);
     AddLog("Succesfully added pizzas to cook!");
 }
 
@@ -124,8 +116,8 @@ capacity_t Kitchen::requestCapacity()
     std::string response;
     std::string msg = "capa";
 
-    msg >> this->_ipc;
-    response << this->_ipc;
+    msg >> *(this->_ipc);
+    response << *(this->_ipc);
 
     SplitString msgSplit(response, ";");
     if (msgSplit._tokens.size() <= 1)
@@ -154,9 +146,9 @@ bool Kitchen::requestOrder(std::vector<Pizza> &orders)
     for (auto order = orders.begin(); order != orders.end(); ++order)
         ss << *order << ";";
     ordersString = ss.str();
-    ordersString >> this->_ipc;
+    ordersString >> *(this->_ipc);
 
-    response << this->_ipc;
+    response << *(this->_ipc);
     if (response == "success")
         return false;
     return true;

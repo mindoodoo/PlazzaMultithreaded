@@ -4,25 +4,16 @@
 #include <fstream>
 #include <unistd.h>
 #include "Kitchen/Ipc.hpp"
+#include "Kitchen/Kitchen.hpp"
 
 int main()
 {
-   Ipc ipc("TODELETE");
+    Kitchen kitchen("ipc/ipc1", 4, 1, 500);
 
-   if (fork()) { // Parent
-       std::string msg = "WSG";
-       msg >> ipc;
-       std::cout << "parent sent message" << std::endl;
-       msg << ipc;
-       std::cout << msg << std::endl;
-   } else { // Child
-       std::string msg;
-
-       msg << ipc;
-       msg >> ipc;
-       std::cout << msg << std::endl;
-   }
-   std::this_thread::sleep_for(std::chrono::seconds(10));
+    if (!kitchen.startProcess()) {
+        capacity_t capa = kitchen.requestCapacity();
+        std::cout << "Capa is : " << capa.totalCapacity;
+    }
 }
 
 // Peek works when msg sent through echo
