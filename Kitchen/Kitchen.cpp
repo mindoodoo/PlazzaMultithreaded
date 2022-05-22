@@ -18,7 +18,6 @@ int Kitchen::processMain()
 {
     Timer timeoutTimer(10);
     std::string newMessage;
-    std::cout << "In process main" << std::endl;
 
     // Lambda function used to launch member function in msg handling thread
     std::function launchThread = [](Kitchen *ptr) {
@@ -41,7 +40,6 @@ void Kitchen::handleMessages()
     msg << (*this->_ipc);
     SplitString splitMsg(msg, ",");
 
-    // std::cout << "Handling msg : " << msg << std::endl;
     // Invalid format check
     if (splitMsg._tokens.size() < 1)
         return;
@@ -64,9 +62,7 @@ void Kitchen::respondCapacity()
     ss << ";";
     ss << totalCapa;
     msg = ss.str();
-
     msg >> *(this->_ipc);
-    
     // std::cout << "After sending response" << std::endl;
 }
 
@@ -147,7 +143,6 @@ bool Kitchen::requestOrder(std::vector<Pizza> &orders)
         ss << *order << ";";
     ordersString = ss.str();
     ordersString >> *(this->_ipc);
-
     response << *(this->_ipc);
     if (response == "success")
         return false;

@@ -11,8 +11,6 @@ Timer::Timer(float target) : _target(target)
 
 bool Timer::isExpired()
 {
-    if (this->_expired)
-        return true;
     auto currentTime = std::chrono::high_resolution_clock::now();
     std::chrono::duration<float> duration = currentTime - this->_start;
     if (duration.count() >= this->_target)

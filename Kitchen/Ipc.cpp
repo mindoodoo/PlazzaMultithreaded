@@ -18,7 +18,6 @@ std::string Ipc::getBuf() {
     std::stringstream ss;
     std::string output;
     this->_fileStream.open(this->_ipcPath, std::ios::in);
-
     this->_fileStream >> output;
     this->_fileStream.close();
     return output;

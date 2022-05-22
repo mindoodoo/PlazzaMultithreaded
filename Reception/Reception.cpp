@@ -231,35 +231,69 @@ void Reception::inputLoop()
     }
 }
 
+// void Reception::splitOrderInKitchen()
+// {
+//     std::vector<Kitchen> kitchen;
+//     std::vector<Pizza> pizza;
+
+//     int buff = 0;
+//     int id = 0;
+//     int newid = 0;
+//     while (_orders.size() > 0) {
+//         for (size_t i = 0; i < kitchen.size(); i++) {
+//             std::cout << "free : " << kitchen[i].requestCapacity().free << std::endl;
+//             if (kitchen[i].requestCapacity().free > buff) {
+//                 buff = kitchen[i].requestCapacity().free;
+//                 std::cout << buff << std::endl;
+//                 id = i;
+//             }
+//         }
+//         if (buff == 0) {
+//             // std::cout << "before create kitchen" << std::endl;
+
+//             Kitchen newKitchen = Kitchen(std::string("ipc/ipc") + std::to_string(newid),
+//                                  this->_nbrCooksPerKitchen,
+//                                  newid, this->_TimeRefill);
+//             newid++;
+//             if (!newKitchen.startProcess()) {
+//                 exit(0); // This will have to be replaced by adequate frees in the future
+//             }
+//             kitchen.push_back(newKitchen);
+//         } else {
+//             pizza.push_back(_orders[0]);
+//             kitchen[id].requestOrder(pizza);
+//             _orders.erase(_orders.begin());
+//             pizza.erase(pizza.begin());
+//         }
+//     }
+// }
+
 void Reception::splitOrderInKitchen()
 {
     std::vector<Kitchen> kitchen;
-    std::vector<Pizza> pizza;
+    std::vector<std::vector<Pizza>> pizza;
+    size_t pizzaMax = this->_nbrCooksPerKitchen * 2;
+    int a = 0;
 
-    int buff = 0;
-    int id = 0;
-    int newid = 0;
-    while (_orders.size() > 0) {
-        for (size_t i = 0; i < kitchen.size(); i++) {
-            if (kitchen[i].requestCapacity().free > buff) {
-                buff = kitchen[i].requestCapacity().free;
-                id = i;
-            }
+    pizza.push_back(std::vector<Pizza>());
+    for (size_t i = 0; i < _orders.size(); i++)
+    {
+        if (pizza[a].size() == pizzaMax)
+        {
+            a++;
+            pizza.push_back(std::vector<Pizza>());
         }
-        if (buff == 0) {
-            Kitchen newKitchen = Kitchen(std::string("ipc/ipc") + std::to_string(newid),
-                                 this->_nbrCooksPerKitchen,
-                                 newid, this->_TimeRefill);
-            newid++;
-            if (!newKitchen.startProcess()) {
-                exit(0); // This will have to be replaced by adequate frees in the future
-            }
-            kitchen.push_back(newKitchen);
-        } else {
-            pizza.push_back(_orders[0]);
-            kitchen[id].requestOrder(pizza);
-            _orders.erase(_orders.begin());
-            pizza.erase(pizza.begin());
-        }
+        pizza[a].push_back(_orders[i]);
+        _orders.erase(_orders.begin());
+    }
+    for (size_t i = 0; i < pizza.size(); i++)
+    {
+        Kitchen newKitchen = Kitchen(std::string("ipc/ipc") + std::to_string(i),
+                                     this->_nbrCooksPerKitchen,
+                                     i, this->_TimeRefill);
+        if (!newKitchen.startProcess())
+            exit(0); // This will have to be replaced by adequate frees in the future
+        kitchen.push_back(newKitchen);
+        kitchen[i].requestOrder(pizza[i]);
     }
 }
